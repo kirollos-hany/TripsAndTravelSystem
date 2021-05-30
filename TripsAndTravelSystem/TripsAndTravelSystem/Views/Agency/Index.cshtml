@@ -1,0 +1,260 @@
+﻿
+@using Trips_and_TravelSystem.Models
+@model user
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Share/_FactoryLayout.cshtml";
+}
+<div class="row d-flex align-items-center justify-content-center m-5">
+    <div class="main-body">
+        <div class="col-md-8">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="row justify-content-center">
+                            <div class="col-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-column align-items-center text-center" id="xy">
+                                            <img src="/image/serveimage/?id=@Model.user_id" alt="agency_photo" class="rounded-circle" width="150" id="photo">
+                                            <label for="file" id="uploadBtn" data-bs-toggle="modal" data-bs-target="#Agancy_Photo">Choose Photo</label>
+                                            <div class="mt-3">
+                                                <h4>@Model.email</h4>
+                                                <a id="Add" data-bs-toggle="modal" data-bs-target="#Email"><i class="fas fa-edit" style="color:orange;"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">First Name</h6>
+                        </div>
+                        <div class="col-sm-6 text-secondary">
+                            @Model.first_name
+                        </div>
+                        <div class="col-sm-3 text-secondary">
+                            <a id="Add" data-bs-toggle="modal" data-bs-target="#FirstName"><i class="fas fa-edit" style="color:orange;"></i></a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Last Name</h6>
+                        </div>
+                        <div class="col-sm-6 text-secondary">
+                            @Model.last_name
+                        </div>
+                        <div class="col-sm-3 text-secondary">
+                            <a id="Add" data-bs-toggle="modal" data-bs-target="#LastName"><i class="fas fa-edit" style="color:orange;"></i></a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Phone Number</h6>
+                        </div>
+                        <div class="col-sm-6 text-secondary">
+                            @{
+                                string phoneNumber = (Model.country_code + Model.phone_number).ToString();
+                            }
+                            @phoneNumber
+                        </div>
+                        <div class="col-sm-3 text-secondary">
+                            <a id="Add" data-bs-toggle="modal" data-bs-target="#Phone"><i class="fas fa-edit" style="color:orange;"></i></a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Password</h6>
+                        </div>
+                        <div class="col-sm-3 text-secondary">
+                            <a id="Add" data-bs-toggle="modal" data-bs-target="#pass"><i class="fas fa-edit" style="color:orange;"></i></a>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">User Role</h6>
+                        </div>
+                        <div class="col-sm-6 text-secondary">
+                            @Model.user_role
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--Edit Agency Photo-->
+<div class="modal" id="Agancy_Photo">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form id="agencyPhotoForm" action="/agency/editphoto" method="post" enctype="multipart/form-data">
+                    <h5 class="modal-title">Change Agency Photo</h5>
+                    <div class="alert alert-danger">
+                        <p>@ViewBag.ErrorMessage</p>
+                    </div>
+                    <div class="mb-3 p-3">
+                        <input class="form-control" type="file" accept="image/*" id="formFile" required name="newAgencyPhoto">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Submit Change</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--edit Email-->
+<div class="modal" id="Email">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="mb-3 p-3">
+                    <form action="/agency/editemail" method="post" id="emailForm">
+                        <div class="alert alert-danger">
+                            <p>@ViewBag.ErrorMessage</p>
+                        </div>
+                        <div class="form-group p-2">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="you@gmail.com" name="newEmail" required>
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
+                        <button type="submit" class="btn btn-primary mb-2 p-2">Submit</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--Edit FirstName-->
+<div class="modal" id="FirstName">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form id="firstNameForm" action="/agency/editfirstname" method="post">
+                    <h5 class="modal-title">
+                        Change first name
+                    </h5>
+                    <div class="alert alert-danger">
+                        <p>@ViewBag.ErrorMessage</p>
+                    </div>
+                    <label for="firstName" class="form-label">First name</label>
+                    <input type="text" class="form-control" id="firstName" placeholder="FirstName" required maxlength="10" name="newFirstName">
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Edit LastName-->
+<div class="modal" id="LastName">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form action="/agency/editlastname" method="post" id="lastNameForm">
+                    <h5 class="modal-title">
+                        Change last name
+                    </h5>
+                    <div class="alert alert-danger">
+                        <p>@ViewBag.ErrorMessage</p>
+                    </div>
+                    <label for="LastName" class="form-label">Last name</label>
+                    <input type="text" class="form-control" id="firstName" placeholder="Last name" required maxlength="10" name="newLastName">
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Submit Change</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Edit Trip Photo-->
+<div class="modal" id="Trip_Photo">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form>
+                    <h5 class="modal-title">Change Trip Photo</h5>
+                    <div class="mb-3 p-3">
+                        <input class="form-control" type="file" id="formFile">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Edit Phone number
+-->
+<div class="modal" id="Phone">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form id="phoneNumberForm" method="post" action="/agency/editphonenumber">
+                    <h5 class="modal-title">
+                        Change phone number
+                    </h5>
+                    <div class="alert alert-danger">
+                        <p>@ViewBag.ErrorMessage</p>
+                    </div>
+                    <div class="mb-3 p-3">
+                        <input type="text" class="form-control" placeholder="+20" maxlength="3" required name="newCountryCode">
+                    </div>
+                    <div class="mb-3 p-3">
+                        <input type="tel" class="form-control" placeholder="1206784139" maxlength="10" required name="newPhoneNumber">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="pass">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form id="passwordForm" method="post" action="/agency/editpassword">
+                    <h5 class="modal-title">
+                        Change Password
+                    </h5>
+                    <div class="alert alert-danger">
+                        <p>@ViewBag.ErrorMessage</p>
+                    </div>
+                    <div class="mb-3 p-3">
+                        <input type="password" class="form-control" placeholder="Password" maxlength="20" required name="newPassword">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.validate.js"></script>
+<script>
+    $("#firstNameForm").validate();
+    $("#lastNameForm").validate();
+    $("#emailForm").validate();
+    $("#phoneNumberForm").validate();
+    $("#passwordForm").validate();
+</script>

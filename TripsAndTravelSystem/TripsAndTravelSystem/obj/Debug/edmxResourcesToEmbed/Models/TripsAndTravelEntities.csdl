@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TripsAndTravelDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="DislikedPost">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TravelerId" Type="Int32" Nullable="false" />
+    <Property Name="PostId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Post" Relationship="Self.FK_DislikedPosts_Posts" FromRole="DislikedPosts" ToRole="Posts" />
+    <NavigationProperty Name="User" Relationship="Self.FK_DislikedPosts_Users" FromRole="DislikedPosts" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="FavoritePost">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PostId" Type="Int32" Nullable="false" />
+    <Property Name="TravelerId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Post" Relationship="Self.FK_FavoritePosts_Posts" FromRole="FavoritePosts" ToRole="Posts" />
+    <NavigationProperty Name="User" Relationship="Self.FK_FavoritePosts_Users" FromRole="FavoritePosts" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="LikedPost">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TravelerId" Type="Int32" Nullable="false" />
+    <Property Name="PostId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Post" Relationship="Self.FK_LikedPosts_Posts" FromRole="LikedPosts" ToRole="Posts" />
+    <NavigationProperty Name="User" Relationship="Self.FK_LikedPosts_Users" FromRole="LikedPosts" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Post">
+    <Key>
+      <PropertyRef Name="PostId" />
+    </Key>
+    <Property Name="PostId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AgencyId" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="10" Scale="4" Nullable="false" />
+    <Property Name="Destination" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TripPhoto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TripDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="PostDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Status" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="NumOfLikes" Type="Int32" Nullable="false" />
+    <Property Name="NumOfDislikes" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="DislikedPosts" Relationship="Self.FK_DislikedPosts_Posts" FromRole="Posts" ToRole="DislikedPosts" />
+    <NavigationProperty Name="FavoritePosts" Relationship="Self.FK_FavoritePosts_Posts" FromRole="Posts" ToRole="FavoritePosts" />
+    <NavigationProperty Name="LikedPosts" Relationship="Self.FK_LikedPosts_Posts" FromRole="Posts" ToRole="LikedPosts" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Posts_Users" FromRole="Posts" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="TravelerQuestion">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Question" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AgencyId" Type="Int32" Nullable="false" />
+    <Property Name="TravelerId" Type="Int32" Nullable="false" />
+    <Property Name="QuestionDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="AnswerDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Answer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="Self.FK_TravelerQuestiosn_Agency" FromRole="TravelerQuestions" ToRole="Users" />
+    <NavigationProperty Name="User1" Relationship="Self.FK_TravelerQuestiosn_Users" FromRole="TravelerQuestions" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="320" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="14" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="ProfilePhoto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserRole" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="DislikedPosts" Relationship="Self.FK_DislikedPosts_Users" FromRole="Users" ToRole="DislikedPosts" />
+    <NavigationProperty Name="FavoritePosts" Relationship="Self.FK_FavoritePosts_Users" FromRole="Users" ToRole="FavoritePosts" />
+    <NavigationProperty Name="LikedPosts" Relationship="Self.FK_LikedPosts_Users" FromRole="Users" ToRole="LikedPosts" />
+    <NavigationProperty Name="Posts" Relationship="Self.FK_Posts_Users" FromRole="Users" ToRole="Posts" />
+    <NavigationProperty Name="TravelerQuestions" Relationship="Self.FK_TravelerQuestiosn_Agency" FromRole="Users" ToRole="TravelerQuestions" />
+    <NavigationProperty Name="TravelerQuestions1" Relationship="Self.FK_TravelerQuestiosn_Users" FromRole="Users" ToRole="TravelerQuestions" />
+  </EntityType>
+  <Association Name="FK_DislikedPosts_Posts">
+    <End Role="Posts" Type="Self.Post" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DislikedPosts" Type="Self.DislikedPost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Posts">
+        <PropertyRef Name="PostId" />
+      </Principal>
+      <Dependent Role="DislikedPosts">
+        <PropertyRef Name="PostId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DislikedPosts_Users">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="DislikedPosts" Type="Self.DislikedPost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="DislikedPosts">
+        <PropertyRef Name="TravelerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FavoritePosts_Posts">
+    <End Role="Posts" Type="Self.Post" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="FavoritePosts" Type="Self.FavoritePost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Posts">
+        <PropertyRef Name="PostId" />
+      </Principal>
+      <Dependent Role="FavoritePosts">
+        <PropertyRef Name="PostId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FavoritePosts_Users">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="FavoritePosts" Type="Self.FavoritePost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="FavoritePosts">
+        <PropertyRef Name="TravelerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LikedPosts_Posts">
+    <End Role="Posts" Type="Self.Post" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="LikedPosts" Type="Self.LikedPost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Posts">
+        <PropertyRef Name="PostId" />
+      </Principal>
+      <Dependent Role="LikedPosts">
+        <PropertyRef Name="PostId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LikedPosts_Users">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="LikedPosts" Type="Self.LikedPost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="LikedPosts">
+        <PropertyRef Name="TravelerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Posts_Users">
+    <End Role="Users" Type="Self.User" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Posts" Type="Self.Post" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Posts">
+        <PropertyRef Name="AgencyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TravelerQuestiosn_Agency">
+    <End Role="Users" Type="Self.User" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TravelerQuestions" Type="Self.TravelerQuestion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="TravelerQuestions">
+        <PropertyRef Name="AgencyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TravelerQuestiosn_Users">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="TravelerQuestions" Type="Self.TravelerQuestion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="TravelerQuestions">
+        <PropertyRef Name="TravelerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TripsAndTravelDatabaseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DislikedPosts" EntityType="Self.DislikedPost" />
+    <EntitySet Name="FavoritePosts" EntityType="Self.FavoritePost" />
+    <EntitySet Name="LikedPosts" EntityType="Self.LikedPost" />
+    <EntitySet Name="Posts" EntityType="Self.Post" />
+    <EntitySet Name="TravelerQuestions" EntityType="Self.TravelerQuestion" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK_DislikedPosts_Posts" Association="Self.FK_DislikedPosts_Posts">
+      <End Role="Posts" EntitySet="Posts" />
+      <End Role="DislikedPosts" EntitySet="DislikedPosts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DislikedPosts_Users" Association="Self.FK_DislikedPosts_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="DislikedPosts" EntitySet="DislikedPosts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FavoritePosts_Posts" Association="Self.FK_FavoritePosts_Posts">
+      <End Role="Posts" EntitySet="Posts" />
+      <End Role="FavoritePosts" EntitySet="FavoritePosts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FavoritePosts_Users" Association="Self.FK_FavoritePosts_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="FavoritePosts" EntitySet="FavoritePosts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LikedPosts_Posts" Association="Self.FK_LikedPosts_Posts">
+      <End Role="Posts" EntitySet="Posts" />
+      <End Role="LikedPosts" EntitySet="LikedPosts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LikedPosts_Users" Association="Self.FK_LikedPosts_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="LikedPosts" EntitySet="LikedPosts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Posts_Users" Association="Self.FK_Posts_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Posts" EntitySet="Posts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TravelerQuestiosn_Agency" Association="Self.FK_TravelerQuestiosn_Agency">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="TravelerQuestions" EntitySet="TravelerQuestions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TravelerQuestiosn_Users" Association="Self.FK_TravelerQuestiosn_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="TravelerQuestions" EntitySet="TravelerQuestions" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

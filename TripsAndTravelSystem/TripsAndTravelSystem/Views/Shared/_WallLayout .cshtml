@@ -1,0 +1,344 @@
+﻿@using TripsAndTravelSystem.Models;
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#7952b3">
+
+    <title>@ViewBag.Title</title>
+
+    <link href="~/Content/Bootstrab_css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Bootstrab_css/bootstrap.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <link href="~/Content/Style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <style>
+        a {
+            text-decoration: none;
+            color: aliceblue
+        }
+
+            a.link {
+                color: snow;
+            }
+
+                a.link:hover {
+                    color: #1976d2;
+                }
+
+
+            .thumbnail {
+            position: relative;
+            margin-bottom: 0;
+            border: 0;
+            border-color: transparent;
+        }
+
+        .caption {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+        }
+
+        .checked {
+            color: orange;
+        }
+        p.ex1 {
+            padding-left: 50px;
+        }
+        div.ex1 {
+            padding-left: 50px;
+        }
+    </style>
+</head>
+<body>
+    <!--Navbar-->
+    <nav class="navbar navbar-light bg-light">
+        <div class="container m-1">
+
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-filter"></i>Filter
+                </button>
+                <ul class="dropdown-menu container-fluid" aria-labelledby="dropdownMenuButton1">
+                    <li>
+                        <button type="button" class="btn btn-white" data-bs-toggle="modal" data-bs-target="#Price">Trip Price</button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-white " data-bs-toggle="modal" data-bs-target="#Name">Agency name</button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-white" data-bs-toggle="modal" data-bs-target="#Date">Trip Date</button>
+                    </li>
+                </ul>
+            </div>
+            <ul class="list-inline m-2">
+                <li class="list-inline-item">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalSignUP" id="registerModalBtn">
+                        Register
+                    </button>
+                </li>
+                <li class="list-inline-item">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalLogin" id="loginModalBtn">
+                        Login
+                    </button>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <!--Filter By Trip Price-->
+    <div class="modal fade" id="Price" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog h-500">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Enter Trip Price" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Filter By Agancy Name-->
+    <div class="modal fade" id="Name" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog h-500">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Enter Agency name" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Filter By Trip Date-->
+    <div class="modal fade" id="Date" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog h-500">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="date" placeholder="Enter Trip Date" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="box-search">
+        <div class="thumbnail text-center">
+            <img src="~/images/1.jpg" alt="" class="img-fluid  ">
+            <div class="caption">
+                <p style="font-size:80px;">
+                    @Html.ActionLink("Trips and TravelSystem", "Index")
+                </p>
+                <p style="font-size:50px; color:wheat">
+                    Complete solution for travel agencies and tour operators.
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- Button trigger modal -->
+    <!-- Modal Login-->
+    <div class="modal fade" id="ModalLogin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog h-500">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <!--
+                            <div class="form-floating  m-2">
+                            <label for="floatingInput" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" required>
+                        </div>
+                        <div class="form-floating m-2">
+                            <label for="floatingPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required maxlength="20">
+                        </div>
+                        -->
+                        <div id="loginerror"></div>
+
+                        <div class="row g-3">
+                            <div class="col-sm-12">
+                                <label for="firstName" class="form-label">Email</label>
+                                <input type="email" class="form-control" required name="email">
+                            </div>
+                            <div class="col-sm-12">
+                                <label for="lastName" class="form-label">Password</label>
+                                <input type="password" class="form-control" required name="password" maxlength="20">
+                            </div>
+                        </div>
+                    </form>
+                    <div class="modal-footer">
+                        <button class="w-100 btn btn-lg btn-primary" type="submit" id="loginBtn">Sign in</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal SignUP-->
+    <div class="modal fade" id="ModalSignUP" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Register</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm" method="post">
+                        <div id="registererror"></div>
+                        <div class="row g-3">
+                            <div class="col-sm-6">
+                                <label for="firstName" class="form-label">First name</label>
+                                <input type="text" class="form-control" id="firstName" required name="first_name" maxlength="10">
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="lastName" class="form-label">Last name</label>
+                                <input type="text" class="form-control" id="lastName" required name="last_name" maxlength="10">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label for="email" class="form-label">Email <span class="text-muted"></span></label>
+                            <input type="email" class="form-control" placeholder="you@example.com" name="email_register" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="phone_number" class="form-label">phone number <span class="text-muted"></span></label>
+                            <input type="text" class="form-control" placeholder="+xx xxxxxxxxxx" name="phone_number" maxlength="14" required>
+                        </div>
+                        <div class="col-12 m-3">
+                            <label>Photo</label>
+                            <input type="file" accept="image/*" id="file-input" name="profile_photo" required>
+                        </div>
+                        <div class="col-12">
+                            <label>Password</label>
+                            <input type="password" class="form-control" placeholder="Password" name="password_register" maxlength="20" required>
+                        </div>
+                        <div class="col-12">
+                            <label>Confirm Password</label>
+                            <input type="password" class="form-control" placeholder="Password" name="confirm_password" maxlength="20" required>
+                        </div><br />
+                        <div class="col-12" id="radioContainer">
+                            <label>Traveler:</label>
+                            <input type="radio" required name="role" value="@TripsAndTravelSystem.Models.User.UserRoles.Traveler.ToString()">
+                            <br />
+                            <label>Agency:</label>
+                            <input type="radio" required name="role" value="@TripsAndTravelSystem.Models.User.UserRoles.Agency.ToString()">
+                            <br />
+                        </div>
+                    </form>
+                    <div class="modal-footer">
+                        <button class="w-100 btn btn-primary btn-lg" id="registerBtn">Register</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card bg-dark">
+
+        <ul class="nav nav-tabs profile-tab" role="tablist">
+            <li class="nav-item p-3">
+                <p style="font-size:30px; color:black;">
+                    @Html.ActionLink("Timeline", "Index")
+                </p>
+            </li>
+            <li class="nav-item p-3">
+                <p style="font-size:30px; color:black;">
+                    @Html.ActionLink("Favourite", "Favourite")
+                    <i class="fas fa-star text-warning"></i>
+                </p>
+            </li>
+            <li class="nav-item p-3">
+                <p style="font-size:30px; color:black;">
+                    @Html.ActionLink("Questions", "WellQuestions")
+                </p>
+            </li>
+        </ul>
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+    <footer class="bg-dark text-center text-white ">
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+            <!-- Section: Social media -->
+            <section class="mb-4 p-7">
+                <!-- Facebook -->
+                <a href="#">
+                    <i class="fab fa-facebook" style="font-size:48px;color:dodgerblue"></i>
+                </a>
+                <!-- Twitter -->
+                <a href="#">
+                    <i class="fab fa-twitter" style="font-size:48px;color:dodgerblue"></i>
+                </a>
+
+                <!-- Google -->
+                <a href="#">
+                    <i class="fab fa-google" style="font-size:48px;color:red"></i>
+                </a>
+
+                <!-- Instagram -->
+                <a href="#">
+                    <i class="fab fa-instagram" style="font-size:48px;color:orangered"></i>
+                </a>
+
+                <!-- Linkedin -->
+                <a href="#">
+                    <i class="fab fa-linkedin" style="font-size:48px;color:blue"></i>
+                </a>
+                <!-- Github -->
+                <a href="#">
+                    <i class="fab fa-github" style="font-size:48px;color:ghostwhite"></i>
+                </a>
+            </section>
+            <!-- Section: Social media -->
+        </div>
+        <!-- Grid container -->
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2020 Copyright:
+            <a class="text-white" href="https://OnlineTravel.com/">OnlineTravel.com</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <script src="~/Script/jquery/jquery.min.js"></script>
+    <script src="~/Scripts/Bootstrap_js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/IndexScript.js"></script>
+    <script src="~/Scripts/login.js"></script>
+    <script src="~/Scripts/register.js"></script>
+    <script type="text/javascript">
+        const userId = localStorage.getItem("userId");
+        console.log("id from local storage:" + userId);
+        if (userId != 0) {
+            const registerModal = document.getElementById("registerModalBtn");
+            registerModal.removeAttribute('data-bs-toggle');
+            registerModal.removeAttribute('data-bs-target');
+            registerModal.remove();
+            const loginModal = document.getElementById("loginModalBtn");
+            loginModal.removeAttribute('data-bs-toggle');
+            loginModal.removeAttribute('data-bs-target');
+            loginModal.innerHTML = "Signout";
+            loginModal.addEventListener('click', async () => {
+                localStorage.setItem("userId", 0);
+                window.location.reload();
+            });
+        }
+    </script>
+</body>
+</html>

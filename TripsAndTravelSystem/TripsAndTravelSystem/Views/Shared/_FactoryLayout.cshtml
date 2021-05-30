@@ -1,0 +1,193 @@
+﻿
+<!doctype html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#7952b3">
+
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link href="~/Content/Bootstrab_css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Bootstrab_css/bootstrap.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/jquery.tabledit.js"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="dashboard.css" rel="stylesheet">
+    <style>
+        a {
+            text-decoration: none;
+            color: #1976d2
+        }
+
+            a.link {
+                color: snow;
+            }
+
+                a.link:hover {
+                    color:dimgrey;
+                }
+
+
+        .thumbnail {
+            position: relative;
+            margin-bottom: 0;
+            border: 0;
+            border-color: transparent;
+        }
+
+        .card {
+            border-radius: 5px;
+            -webkit-box-shadow: 0 0 5px 0 rgba(43, 43, 43, 0.1), 0 11px 6px -7px rgba(43, 43, 43, 0.1);
+            box-shadow: 0 0 5px 0 rgba(43, 43, 43, 0.1), 0 11px 6px -7px rgba(43, 43, 43, 0.1);
+            border: none;
+            margin-bottom: 30px;
+            -webkit-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out
+        }
+
+            .card .card-header {
+                background-color: transparent;
+                border-bottom: none;
+                padding: 20px;
+                position: relative
+            }
+
+            .card .card-block {
+                padding: 1.25rem
+            }
+
+        .table-responsive {
+            display: inline-block;
+            width: 100%;
+            overflow-x: auto
+        }
+
+        .card .card-block table tr {
+            padding-bottom: 20px
+        }
+
+        .table > thead > tr > th {
+            border-bottom-color: #ccc
+        }
+
+        .table th {
+            padding: 1.25rem 0.75rem
+        }
+
+        td,
+        th {
+            white-space: nowrap
+        }
+
+        .tabledit-input:disabled {
+            display: none
+        }
+
+        .btn-primary,
+        .sweet-alert button.confirm,
+        .wizard > .actions a {
+            background-color: #4099ff;
+            border-color: #4099ff;
+            color: #fff;
+            cursor: pointer;
+            -webkit-transition: all ease-in 0.3s;
+            transition: all ease-in 0.3s
+        }
+
+        .btn {
+            border-radius: 2px;
+            text-transform: capitalize;
+            font-size: 15px;
+            padding: 10px 19px;
+            cursor: pointer
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('#example-1').Tabledit({
+                editButton: false,
+                deleteButton: false,
+                hideIdentifier: false,
+                columns: {
+                    identifier: [1, 'Questions'],
+                    editable: [[2, 'Replay']]
+                }
+            });
+
+        });
+    </script>
+</head>
+<body>
+
+    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap  shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Trips and Travel System</a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                @Html.ActionLink(linkText:"Sign out", actionName:"signout",controllerName:"index", htmlAttributes: new { @class = "nav-link"}, routeValues: null)
+            </li>
+        </ul>
+    </header>
+
+    <div class="container-fluid m-0">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-2 d-md-block bg-light sidebar collapse navbar-custom h-900">
+                <div class="position-sticky ">
+                    <ul class="nav flex-column ">
+                        <li class="nav-item p-2" style="font-size:large;">
+                            <p style="font-size:20px;">
+
+                                @Html.ActionLink("AgencyProfile", "AgencyProfile")</p>
+                        </li>
+                        <li class="nav-item p-2" style="font-size:large;">
+                            <p style="font-size:20px;">
+
+                                @Html.ActionLink("Create trippost page", "NewPost")</p>
+                        </li>
+                        <li class="nav-item p-2" style="font-size:large;">
+                            <p style="font-size:20px;">
+
+                                @Html.ActionLink("History Page", "History")</p>
+                        </li>
+                        <li class="nav-item p-2" style="font-size:large;">
+                            <p style="font-size:20px;">
+
+                                @Html.ActionLink("Received questions", "Questions")</p>
+
+                        </li>
+                    </ul>
+
+
+                </div>
+            </nav>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <!-- ============================================================== -->
+    <footer class="footer text-center">
+        2021 ©  <a href="https://www.Trip_TravelSystem.com/">Trips and Travel System.com</a>
+    </footer>
+    <!-- ============================================================== -->
+    <!-- End footer -->
+    <!-- ============================================================== -->
+    <script src="~/Scripts/Agency.js"></script>
+    <script src="~/Scripts/Bootstrap_js/bootstrap.min.js"></script>
+    <script src="~/Scripts/Bootstrap_js/bootstrap.bundle.min.js"></script>
+    <script src="~/Scripts/agency-answer-question.js"></script>
+</body>
+</html>
