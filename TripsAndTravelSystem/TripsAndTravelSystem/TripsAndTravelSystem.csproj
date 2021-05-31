@@ -136,6 +136,7 @@
       <DependentUpon>TripsAndTravelEntities.edmx</DependentUpon>
       <LastGenOutput>TripsAndTravelEntities.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\adduser.js" />
     <Content Include="Scripts\agency-answer-question.js" />
     <Content Include="Scripts\Agency.js" />
     <Content Include="Scripts\Bootstrap_js\bootstrap.bundle.js" />
@@ -144,6 +145,8 @@
     <Content Include="Scripts\Bootstrap_js\bootstrap.esm.min.js" />
     <Content Include="Scripts\Bootstrap_js\bootstrap.js" />
     <Content Include="Scripts\Bootstrap_js\bootstrap.min.js" />
+    <Content Include="Scripts\deleteuser.js" />
+    <Content Include="Scripts\edituser.js" />
     <Content Include="Scripts\IndexScript.js" />
     <None Include="Scripts\jquery-1.4.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.4.4.js" />
@@ -154,6 +157,7 @@
     <Content Include="Scripts\jquery\jquery.min.js" />
     <Content Include="Scripts\login.js" />
     <Content Include="Scripts\register.js" />
+    <Content Include="Scripts\signout.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -166,9 +170,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DeleteUserModel.cs" />
+    <Compile Include="Models\DeleteUserResponse.cs" />
     <Compile Include="Models\DislikedPost.cs">
       <DependentUpon>TripsAndTravelEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EditEmailModel.cs" />
+    <Compile Include="Models\EditNameModel.cs" />
+    <Compile Include="Models\EditPasswordModel.cs" />
+    <Compile Include="Models\EditPhoneNumberModel.cs" />
+    <Compile Include="Models\EditPhotoModel.cs" />
+    <Compile Include="Models\EditResponse.cs" />
     <Compile Include="Models\FavoritePost.cs">
       <DependentUpon>TripsAndTravelEntities.tt</DependentUpon>
     </Compile>
@@ -207,6 +219,7 @@
     <Compile Include="Services\ImageServices.cs" />
     <Compile Include="Services\AuthorizationServices.cs" />
     <Compile Include="Services\PostValidationServices.cs" />
+    <Compile Include="Services\UrlServices.cs" />
     <Compile Include="Services\UserValidationServices.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -252,9 +265,9 @@
     <Content Include="Views\Agency\NewPost.cshtml" />
     <Content Include="Views\Agency\Questions.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\Postspage.cshtml" />
-    <Content Include="Views\Admin\Postsrequest.cshtml" />
-    <Content Include="Views\Admin\userpage.cshtml" />
+    <Content Include="Views\Admin\PostsPage.cshtml" />
+    <Content Include="Views\Admin\PostRequests.cshtml" />
+    <Content Include="Views\Admin\UsersPage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

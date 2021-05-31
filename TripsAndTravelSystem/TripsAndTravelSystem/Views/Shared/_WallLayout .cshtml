@@ -157,18 +157,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="loginForm">
-                        <!--
-                            <div class="form-floating  m-2">
-                            <label for="floatingInput" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" required>
-                        </div>
-                        <div class="form-floating m-2">
-                            <label for="floatingPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required maxlength="20">
-                        </div>
-                        -->
                         <div id="loginerror"></div>
-
                         <div class="row g-3">
                             <div class="col-sm-12">
                                 <label for="firstName" class="form-label">Email</label>
@@ -319,26 +308,9 @@
     <script src="~/Scripts/Bootstrap_js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
     <script src="~/Scripts/jquery.validate.js"></script>
-    <script src="~/Scripts/IndexScript.js"></script>
-    <script src="~/Scripts/login.js"></script>
     <script src="~/Scripts/register.js"></script>
-    <script type="text/javascript">
-        const userId = localStorage.getItem("userId");
-        console.log("id from local storage:" + userId);
-        if (userId != 0) {
-            const registerModal = document.getElementById("registerModalBtn");
-            registerModal.removeAttribute('data-bs-toggle');
-            registerModal.removeAttribute('data-bs-target');
-            registerModal.remove();
-            const loginModal = document.getElementById("loginModalBtn");
-            loginModal.removeAttribute('data-bs-toggle');
-            loginModal.removeAttribute('data-bs-target');
-            loginModal.innerHTML = "Signout";
-            loginModal.addEventListener('click', async () => {
-                localStorage.setItem("userId", 0);
-                window.location.reload();
-            });
-        }
-    </script>
+    <script src="~/Scripts/IndexScript.js"></script>
+    <script src="~/Scripts/signout.js"></script>
+    <script src="~/Scripts/login.js"></script>
 </body>
 </html>

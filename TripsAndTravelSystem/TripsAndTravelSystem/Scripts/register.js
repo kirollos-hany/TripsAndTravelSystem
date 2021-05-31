@@ -65,7 +65,7 @@ async function PostRegisterData(data, error){
     }).then(response => response.json()).then((responseData) => {
         if (responseData.UserId != 0) {
             error.innerHTML = "Successful Registeration";
-            const loginData = {Email : data.Email, Password: data.Password}
+            const loginData = { Email: data.Email, Password: data.Password };
             loginUser(loginData);
         } else {
             error.innerHTML = data.ErrorMessage;

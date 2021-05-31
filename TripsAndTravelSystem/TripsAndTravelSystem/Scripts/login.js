@@ -12,8 +12,6 @@
     }
     await login(loginData, errorMsg);
 });
-
-
 async function login(loginData, error) {
     const url = "http://localhost:59738/user/login";
     fetch(url, {
@@ -22,10 +20,11 @@ async function login(loginData, error) {
             "content-type": "application/json; charset=UTF-8"
         },
         body: JSON.stringify(loginData)
-    }).then(response => response.json()).then(async (data) => {
+    }).then(response => response.json()).then((data) => {
         if (data.UserId !== 0) {
-            error.innerHTML = "Successful login";
+            error.innerHTML = data.ErrorMessage;
             localStorage.setItem("userId", data.UserId);
+            localStorage.setItem("redirectTo", data.RedirectUrl);
             window.location = data.RedirectUrl;
         } else if (data.UserId === 0) {
             error.innerHTML = data.ErrorMessage;

@@ -77,35 +77,7 @@ namespace TripsAndTravelSystem.Services
                 }
                 return Path.Combine(path, fileName);
         }
-        /*
-        public async Task<string> UploadPhoto(HttpPostedFileBase photo, string role, bool isTripImage, HttpServerUtilityBase Server)
-        {
-            if (photo != null)
-            {
-                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(photo.FileName);
-                string path = "";
-                if (role.Equals(User.UserRoles.Agency.ToString()) && !isTripImage)
-                {
-                    path = Path.Combine(Server.MapPath("~/images/UploadedPhotos/AgencyPhotos"));
-                }
-                else if (isTripImage && role.Equals(User.UserRoles.Agency.ToString()))
-                {
-                    path = Path.Combine(Server.MapPath("~/images/UploadedPhotos/PostPhotos"));
-                }
-                else if (role.Equals(User.UserRoles.Admin.ToString()))
-                {
-                    path = Path.Combine(Server.MapPath("~/images/UploadedPhotos/AdminPhotos"));
-                }
-                else if (role.Equals(User.UserRoles.Traveler.ToString()))
-                {
-                    path = Path.Combine(Server.MapPath("~/images/UploadedPhotos/TravelerPhotos"));
-                }
-                await Task.Run(() => photo.SaveAs(Path.Combine(path, fileName)));
-                photo.SaveAs(Path.Combine(path, fileName));
-                return Path.Combine(path, fileName);
-            }
-            return null;
-        }
+        
 
         public async Task DeleteOldPhoto(string oldPhotoPath)
         {
@@ -114,6 +86,6 @@ namespace TripsAndTravelSystem.Services
                 await Task.Run(() => File.Delete(oldPhotoPath));
             }
         }
-        */
+        
     }
 }

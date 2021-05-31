@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using TripsAndTravelSystem.Models;
@@ -64,15 +62,15 @@ namespace TripsAndTravelSystem.Controllers
                     string url = "";
                     if (await authServices.AuthorizedAdmin(u.UserId))
                     {
-                        url = $"http://localhost:59738/admin/?id={u.UserId}";
+                        url = $"{UrlServices.BaseUrl}/admin/?id={u.UserId}";
                     }
                     else if (await authServices.AuthroizedAgency(u.UserId))
                     {
-                        url = $"http://localhost:59738/agency/?id={u.UserId}";
+                        url = $"{UrlServices.BaseUrl}/agency/?id={u.UserId}";
                     }
                     else if (await authServices.AuthroizedTraveler(u.UserId))
                     {
-                        url = "http://localhost:59738/";
+                        url = $"{UrlServices.BaseUrl}/";
                     }
                     return Json(new LoginResponse()
                     {
@@ -94,10 +92,143 @@ namespace TripsAndTravelSystem.Controllers
             return Json(errorResponse);
         }
 
-        public ActionResult SignOut()
+        [HttpPost]
+        public async Task<ActionResult> EditFirstName(EditNameModel editModel)
         {
-            return RedirectToAction(actionName: "Index", controllerName: "Index");
+            if (editModel != null) 
+            {
+                if (validateUser.ValidateName(editModel.Name))
+                {
+                    var user = await dbContext.Users.FindAsync(editModel.UserId);
+                    user.FirstName = editModel.Name;
+                    await dbContext.SaveChangesAsync();
+                    return Json(new EditResponse() { ErrorMessage = "Successful", UserId = user.UserId});
+                }
+                else
+                {
+                    return Json(new EditResponse() { ErrorMessage = validateUser.InvalidNameError, UserId = 0});
+                }
+            }
+            return Json(new EditResponse()
+            {
+                ErrorMessage = "Data not received, try again",
+                UserId = 0
+            });
         }
 
+        [HttpPost]
+        public async Task<ActionResult> EditLastName(EditNameModel editModel)
+        {
+            if (editModel != null)
+            {
+                if (validateUser.ValidateName(editModel.Name))
+                {
+                    var user = await dbContext.Users.FindAsync(editModel.UserId);
+                    user.LastName = editModel.Name;
+                    await dbContext.SaveChangesAsync();
+                    return Json(new EditResponse() { ErrorMessage = "Successful", UserId = user.UserId });
+                }
+                else
+                {
+                    return Json(new EditResponse() { ErrorMessage = validateUser.InvalidNameError, UserId = 0 });
+                }
+            }
+            return Json(new EditResponse()
+            {
+                ErrorMessage = "Data not received, try again",
+                UserId = 0
+            });
+        }
+
+
+        [HttpPost]
+        public async Task<ActionResult> EditPhoto(EditPhotoModel editModel)
+        {
+            if (editModel != null)
+            {
+                    var user = await dbContext.Users.FindAsync(editModel.UserId);
+                    await imageServices.DeleteOldPhoto(user.ProfilePhoto);
+                    user.ProfilePhoto = await imageServices.SavePhoto(editModel.Photo, editModel.PhotoExtension, false, user.UserRole, Server);
+                    await dbContext.SaveChangesAsync();
+                    return Json(new EditResponse() { ErrorMessage = "Successful", UserId = user.UserId });
+            }
+            return Json(new EditResponse()
+            {
+                ErrorMessage = "Data not received, try again",
+                UserId = 0
+            });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> EditEmail(EditEmailModel editModel)
+        {
+            if (editModel != null)
+            {
+                if (validateUser.ValidateEmail(editModel.Email))
+                {
+                    var user = await dbContext.Users.FindAsync(editModel.UserId);
+                    user.Email = editModel.Email;
+                    await dbContext.SaveChangesAsync();
+                    return Json(new EditResponse() { ErrorMessage = "Successful", UserId = user.UserId });
+                }
+                else
+                {
+                    return Json(new EditResponse() { ErrorMessage = validateUser.InvalidNameError, UserId = 0 });
+                }
+            }
+            return Json(new EditResponse()
+            {
+                ErrorMessage = "Data not received, try again",
+                UserId = 0
+            });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> EditPhoneNumber(EditPhoneNumberModel editModel)
+        {
+            if (editModel != null)
+            {
+                if (validateUser.ValidateName(editModel.PhoneNumber))
+                {
+                    var user = await dbContext.Users.FindAsync(editModel.UserId);
+                    user.PhoneNumber = editModel.PhoneNumber;
+                    await dbContext.SaveChangesAsync();
+                    return Json(new EditResponse() { ErrorMessage = "Successful", UserId = user.UserId });
+                }
+                else
+                {
+                    return Json(new EditResponse() { ErrorMessage = validateUser.InvalidNameError, UserId = 0 });
+                }
+            }
+            return Json(new EditResponse()
+            {
+                ErrorMessage = "Data not received, try again",
+                UserId = 0
+            });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> EditPassword(EditPasswordModel editModel)
+        {
+            if (editModel != null)
+            {
+                if (validateUser.ValidatePassword(editModel.Password))
+                {
+                    var user = await dbContext.Users.FindAsync(editModel.UserId);
+                    user.Password = Crypto.HashPassword(editModel.Password);
+                    await dbContext.SaveChangesAsync();
+                    return Json(new EditResponse() { ErrorMessage = "Successful", UserId = user.UserId });
+                }
+                else
+                {
+                    return Json(new EditResponse() { ErrorMessage = validateUser.InvalidNameError, UserId = 0 });
+                }
+            }
+            return Json(new EditResponse()
+            {
+                ErrorMessage = "Data not received, try again",
+                UserId = 0
+            });
+        }
     }
 }

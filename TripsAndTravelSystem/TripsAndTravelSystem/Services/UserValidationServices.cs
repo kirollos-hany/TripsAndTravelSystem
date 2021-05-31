@@ -5,27 +5,56 @@ namespace TripsAndTravelSystem.Services
 {
     public class UserValidationServices
     {
+        private string invalidNameError = "Invalid name must be less than or equal 10 characters";
+        private string invalidEmailError = "Invalid email";
+        private string invalidPhoneNumber = "Invalid phone number must be in format: +xx xxxxxxxxxx";
+        private string invalidPassword = "Invalid password must be less than or equal 20 characters";
+        private string invalidUserRole = "Please select a role";
+        public string InvalidNameError { get
+            {
+                return invalidNameError;
+            } }
+
+        public string InvalidEmailError { get
+            {
+                return invalidEmailError;
+            } }
+
+        public string InvalidPhoneNumber { get
+            {
+                return invalidPhoneNumber;
+            } }
+
+        public string InvalidUserRole { get
+            {
+                return invalidUserRole;
+            } }
+
+        public string InvalidPassword { get
+            {
+                return invalidPassword;
+            } }
         public RegisterResponse ValidateUser(RegisterModel registerInfo)
         {
             if (!(ValidateName(registerInfo.FirstName) && ValidateName(registerInfo.LastName)))
             {
-                return new RegisterResponse() { ErrorMessage = "Invalid name must be less than or equal 10 characters", UserId = 0 };
+                return new RegisterResponse() { ErrorMessage = InvalidNameError, UserId = 0 };
             }
             if (!(ValidatePhoneNumber(registerInfo.PhoneNumber)))
             {
-                return new RegisterResponse() { ErrorMessage = "Invalid phone number must be in format: +xx xxxxxxxxxx", UserId = 0 };
+                return new RegisterResponse() { ErrorMessage = InvalidPhoneNumber, UserId = 0 };
             }
             if (!ValidateEmail(registerInfo.Email))
             {
-                return new RegisterResponse() { ErrorMessage = "Invalid email", UserId= 0 };
+                return new RegisterResponse() { ErrorMessage = InvalidEmailError, UserId= 0 };
             }
             if (!ValidatePassword(registerInfo.Password))
             {
-                return new RegisterResponse() { ErrorMessage = "Invalid password must be less than or equal 20 characters", UserId = 0 };
+                return new RegisterResponse() { ErrorMessage = InvalidPassword, UserId = 0 };
             }
             if (!ValidateRole(registerInfo.UserRole))
             {
-                return new RegisterResponse() { ErrorMessage = "Please select a role" , UserId = 0};
+                return new RegisterResponse() { ErrorMessage = InvalidUserRole , UserId = 0};
             }
             return new RegisterResponse() { ErrorMessage = null, UserId = 0 };
         }

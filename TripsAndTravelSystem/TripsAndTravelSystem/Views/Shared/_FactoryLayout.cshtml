@@ -134,7 +134,7 @@
         </button>
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
-                @Html.ActionLink(linkText:"Sign out", actionName:"signout",controllerName:"index", htmlAttributes: new { @class = "nav-link"}, routeValues: null)
+                <a class="nav-link" id="signout" style="cursor:pointer">SignOut</a>
             </li>
         </ul>
     </header>
@@ -147,22 +147,26 @@
                         <li class="nav-item p-2" style="font-size:large;">
                             <p style="font-size:20px;">
 
-                                @Html.ActionLink("AgencyProfile", "AgencyProfile")</p>
+                                @Html.ActionLink("AgencyProfile", "Index")
+                            </p>
                         </li>
                         <li class="nav-item p-2" style="font-size:large;">
                             <p style="font-size:20px;">
 
-                                @Html.ActionLink("Create trippost page", "NewPost")</p>
+                                @Html.ActionLink("Create trip", "NewPost")
+                            </p>
                         </li>
                         <li class="nav-item p-2" style="font-size:large;">
                             <p style="font-size:20px;">
 
-                                @Html.ActionLink("History Page", "History")</p>
+                                @Html.ActionLink("History", "History")
+                            </p>
                         </li>
                         <li class="nav-item p-2" style="font-size:large;">
                             <p style="font-size:20px;">
 
-                                @Html.ActionLink("Received questions", "Questions")</p>
+                                @Html.ActionLink("Received questions", "Questions")
+                            </p>
 
                         </li>
                     </ul>
@@ -185,9 +189,12 @@
     <!-- ============================================================== -->
     <!-- End footer -->
     <!-- ============================================================== -->
-    <script src="~/Scripts/Agency.js"></script>
     <script src="~/Scripts/Bootstrap_js/bootstrap.min.js"></script>
     <script src="~/Scripts/Bootstrap_js/bootstrap.bundle.min.js"></script>
     <script src="~/Scripts/agency-answer-question.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/Agency.js"></script>
+    <script src="~/Scripts/edituser.js"></script>
+    <script src="~/Scripts/signout.js"></script>
 </body>
 </html>

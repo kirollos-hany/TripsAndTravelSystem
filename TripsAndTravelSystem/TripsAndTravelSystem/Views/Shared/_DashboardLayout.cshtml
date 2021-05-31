@@ -49,38 +49,38 @@
                 <li class="p-2 ">
                     <p style="font-size:20px;">
                         @Html.ActionLink("Admin profile page", "AdminProfile")
-                        </p>
+                    </p>
                 </li>
                 <li class="nav-item p-2">
                     <p style="font-size:20px;">
 
-                        @Html.ActionLink("Users page", "userpage")</p>
+                        @Html.ActionLink("Users page", "userspage")
+                    </p>
                 </li>
                 <li class="nav-item p-2">
                     <p style="font-size:20px;">
 
                         @Html.ActionLink("Posts page", "Postspage")
-                        </p>
+                    </p>
                 </li>
                 <li class="nav-item p-2">
                     <p style="font-size:20px;">
 
-                        @Html.ActionLink("Posts requests", "Postsrequest")
-                        </p>
+                        @Html.ActionLink("Post requests", "Postrequests")
+                    </p>
                 </li>
             </ul>
         </div>
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap ">
-                @Html.ActionLink(linkText: "Sign out", actionName: "signout", controllerName: "user", htmlAttributes: new { @class = "nav-link text-light" }, routeValues: null)
+                <a class="nav-link text-light" id="signout" style="cursor:pointer;">Signout</a>
             </li>
         </ul>
     </nav>
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
         @RenderBody()
-        </main>
-
-
+    </main>
+    <script src="~/Scripts/signout.js"></script>
 </body>
 </html>

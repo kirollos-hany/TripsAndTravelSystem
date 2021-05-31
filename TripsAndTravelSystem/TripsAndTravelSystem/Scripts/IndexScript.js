@@ -1,4 +1,20 @@
-﻿$('.fa-thumbs-up').click(function () {
+﻿const userId = localStorage.getItem("userId");
+if (userId != 0) {
+    const registerModal = document.getElementById("registerModalBtn");
+    registerModal.removeAttribute('data-bs-toggle');
+    registerModal.removeAttribute('data-bs-target');
+    registerModal.remove();
+    const loginModal = document.getElementById("loginModalBtn");
+    loginModal.removeAttribute('data-bs-toggle');
+    loginModal.removeAttribute('data-bs-target');
+    loginModal.innerHTML = "SignOut";
+    loginModal.addEventListener('click', () => {
+        signout();
+    });
+    window.location = localStorage.getItem("redirectTo");
+}
+
+$('.fa-thumbs-up').click(function () {
     $(this).toggleClass('fas far');
 })
 $('.fa-star').click(function () {
@@ -8,10 +24,8 @@ $('.fa-star').click(function () {
 async function Likes(L, postId) {
         if (document.getElementById("my" + postId).innerHTML == L) {
             document.getElementById("my" + postId).innerHTML = L + 1;
-            await EditPostLikes(L + 1, postId); 
         }
         else {
             document.getElementById("my" + postId).innerHTML = L;
-            await EditPostLikes(L, postId);
         }
 }
