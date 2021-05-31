@@ -1,11 +1,15 @@
-﻿$("#editFirstNameBtn").click(() => {
+﻿$("#editFirstNameBtn").click(async () => {
     $("#firstNameForm").validate();
     if (!$("#firstNameForm").valid()) {
         return;
     }
     const userId = localStorage.getItem("userId");
     const name = document.querySelector('input[name="newFirstName"]').value;
-    await EditFirstName(userId, name);
+    const data = {
+        UserId: userId,
+        Name: name
+    };
+    await EditFirstName(data);
 });
 
 $("#editLastNameBtn").click(async () => {
@@ -15,7 +19,11 @@ $("#editLastNameBtn").click(async () => {
     }
     const userId = localStorage.getItem("userId");
     const name = document.querySelector('input[name="newLastName"]').value;
-    await EditLastName(userId, name);
+    const data = {
+        UserId: userId,
+        Name: name
+    };
+    await EditLastName(data);
 });
 
 $("#editPhoneNumberBtn").click(async () => {
@@ -25,7 +33,11 @@ $("#editPhoneNumberBtn").click(async () => {
     }
     const userId = localStorage.getItem("userId");
     const phone = document.querySelector('input[name="newPhoneNumber"]').value;
-    await EditPhoneNumber(userId, phone);
+    const data = {
+        UserId: userId,
+        PhoneNumber: phone
+    };
+    await EditPhoneNumber(data);
 });
 
 $("#editPasswordBtn").click(async () => {
@@ -35,7 +47,11 @@ $("#editPasswordBtn").click(async () => {
     }
     const userId = localStorage.getItem("userId");
     const password = document.querySelector('input[name="newPassword"]').value;
-    await EditPassword(userId, password);
+    const data = {
+        UserId: userId,
+        Password: password
+    };
+    await EditPassword(data);
 });
 
 $("#editEmailBtn").click(async () => {
@@ -45,8 +61,13 @@ $("#editEmailBtn").click(async () => {
     }
     const userId = localStorage.getItem("userId");
     const email = document.querySelector('input[name="newEmail"]').value;
-    await EditEmail(userId, email);
+    const data = {
+        Email: email,
+        UserId : userId
+    };
+    await EditEmail(data);
 });
+
 
 $("#editPhotoBtn").click(async () => {
     $("#editPhotoForm").validate();
@@ -54,24 +75,28 @@ $("#editPhotoBtn").click(async () => {
         return;
     }
     const photoFile = document.querySelector('input[name="newAgencyPhoto"]');
-    const extension = photoFile.files[0].name.split('.').pop();
     const userId = localStorage.getItem("userId");
+    console.log("kkk");
+    const extension = photoFile.files[0].name.split('.').pop();
+    const fileReader = new FileReader();
     fileReader.addEventListener('load', async () => {
-        const photo = photoFile.files[0].split(',')[1];
-        await EditPhoto(userId, photo, extension);
+        console.log(extension);
+        const data = {
+            Photo:fileReader.result.split(',')[1],
+            PhotoExtension: extension,
+            UserId: userId
+        };
+        console.log(data);
+        await EditPhoto(data);
     });
-    if (photo.value) {
-        fileReader.readAsDataURL(photo.files[0]);
+    if (photoFile.value) {
+        fileReader.readAsDataURL(photoFile.files[0]);
     }
 });
 
 
 
-async function EditFirstName(userId, name) {
-    const data = {
-        UserId: userId,
-        Name: name
-    }
+async function EditFirstName(data) {
     const url = "http://localhost:59738/user/editfirstname";
     fetch(url, {
         method: "POST",
@@ -87,14 +112,9 @@ async function EditFirstName(userId, name) {
             document.querySelector("#editfirstnameerror").innerHTML = responseData.ErrorMessage;
         }
     }).catch(err=>alert(err));
-
 }
 
-async function EditLastName(userId, name) {
-    const data = {
-        UserId: userId,
-        Name: name
-    }
+async function EditLastName(data) {
     const url = "http://localhost:59738/user/editlastname";
     fetch(url, {
         method: "POST",
@@ -113,11 +133,7 @@ async function EditLastName(userId, name) {
 
 }
 
-async function EditPhoneNumber(userId, phoneNumber) {
-    const data = {
-        UserId: userId,
-        PhoneNumber: phoneNumber
-    }
+async function EditPhoneNumber(data) {
     const url = "http://localhost:59738/user/editphonenumber";
     fetch(url, {
         method: "POST",
@@ -135,11 +151,7 @@ async function EditPhoneNumber(userId, phoneNumber) {
     }).catch(err=>alert(err));
 }
 
-async function EditPassword(userId, pass) {
-    const data = {
-        UserId: userId,
-        Password: pass
-    };
+async function EditPassword(data) {
     const url = "http://localhost:59738/user/editpassword";
     fetch(url, {
         method: "POST",
@@ -157,11 +169,7 @@ async function EditPassword(userId, pass) {
     }).catch(err => alert(err));
 }
 
-async function EditEmail(userId, email) {
-    const data = {
-        UserId: userId,
-        Email: email
-    };
+async function EditEmail(data) {
     const url = "http://localhost:59738/user/editemail";
     fetch(url, {
         method: "POST",
@@ -179,12 +187,8 @@ async function EditEmail(userId, email) {
     }).catch(err => alert(err));
 }
 
-async function EditPhoto(userId, photo, extension) {
-    const data = {
-        UserId: userId,
-        Photo: photo,
-        PhotoExtension: extension
-    };
+
+async function EditPhoto(data) {
     const url = "http://localhost:59738/user/editphoto";
     fetch(url, {
         method: "POST",

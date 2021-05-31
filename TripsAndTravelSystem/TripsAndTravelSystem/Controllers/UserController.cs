@@ -188,7 +188,7 @@ namespace TripsAndTravelSystem.Controllers
         {
             if (editModel != null)
             {
-                if (validateUser.ValidateName(editModel.PhoneNumber))
+                if (validateUser.ValidatePhoneNumber(editModel.PhoneNumber))
                 {
                     var user = await dbContext.Users.FindAsync(editModel.UserId);
                     user.PhoneNumber = editModel.PhoneNumber;
