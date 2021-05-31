@@ -149,3 +149,4 @@ D:\ia_project\TripsAndTravelSystem\TripsAndTravelSystem\obj\Debug\TripsAndTravel
 D:\ia_project\TripsAndTravelSystem\TripsAndTravelSystem\obj\Debug\TripsAndTravelSystem.csproj.CopyComplete
 D:\ia_project\TripsAndTravelSystem\TripsAndTravelSystem\obj\Debug\TripsAndTravelSystem.dll
 D:\ia_project\TripsAndTravelSystem\TripsAndTravelSystem\obj\Debug\TripsAndTravelSystem.pdb
+D:\ia_project\TripsAndTravelSystem\TripsAndTravelSystem\obj\Debug\TripsAndTravelSystem.csproj.AssemblyReference.cache

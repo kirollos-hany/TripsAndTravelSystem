@@ -2,7 +2,7 @@
     ViewBag.Title = "Postspage";
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
-@foreach (var acceptedPost in ViewBag.AcceptedPosts)
+@foreach (var acceptedPost in ViewBag.Posts)
 {
     <div class="row d-flex align-items-center justify-content-center m-5">
         <div class="main-body">
@@ -59,7 +59,7 @@
                                 <h6 class="mb-0">Trip Date</h6>
                             </div>
                             <div class="col-sm-6 text-secondary">
-                                @acceptedPost.TripDate
+                                @acceptedPost.TripDate.ToShortDateString()
                             </div>
                             <div class="col-sm-3 text-secondary">
                                 <a id="Add" data-bs-toggle="modal" data-bs-target="#TripDate"><i class="fas fa-edit" style="color:orange;"></i></a>
@@ -94,15 +94,16 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form id="editTitleForm" action="/agency/editposttitle/?id=@acceptedPost.PostId" method="post">
+                    <div id="titleerror"></div>
+                    <form id="editTitleForm">
                         <h5 class="modal-title">Change Trip Title</h5>
                         <div class="mb-3 p-3">
                             <input type="text" class="form-control" maxlength="50" placeholder="Title" required name="newTitle">
                         </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
                     </form>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" onclick="editPostTitle(@acceptedPost.PostId)">Submit</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -113,15 +114,16 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form id="editTripPhotoForm" action="/agency/editpostphoto/?id=@acceptedPost.PostId" method="post" enctype="multipart/form-data">
+                    <div id="photoerror"></div>
+                    <form id="editTripPhotoForm">
                         <h5 class="modal-title">Change Trip Photo</h5>
                         <div class="mb-3 p-3">
                             <input class="form-control" type="file" id="formFile" required name="newPostPhoto">
                         </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
                     </form>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" onclick="editPostPhoto(@acceptedPost.PostId)">Submit</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -133,15 +135,16 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form id="editDetailsForm" action="/agency/editpostdetails/?id=@acceptedPost.PostId" method="post">
+                    <div id="detailserror"></div>
+                    <form id="editDetailsForm">
                         <h5 class="modal-title">Change Trip details</h5>
                         <div class="mb-3 p-3">
                             <textarea class="form-control" aria-label="With textarea" placeholder="Enter details" required name="newPostDetails"></textarea>
                         </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
                     </form>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" onclick="editPostDetails(@acceptedPost.PostId)">Submit</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -152,17 +155,18 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form id="editTripDateForm" action="/agency/editpostdate/?id=@acceptedPost.PostId" method="post">
+                    <div id="dateerror"></div>
+                    <form id="editTripDateForm">
                         <h5 class="modal-title">
                             Change Trip Date
                         </h5>
                         <div class="mb-3 p-3">
-                            <input type="datetime" class="form-control" name="newPostDate" required>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <input type="date" class="form-control" name="newPostDate" required>
                         </div>
                     </form>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" onclick="editTripDate(@acceptedPost.PostId)">Submit</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -175,17 +179,18 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form id="editDestinationForm" action="/agency/editpostdestination/?id=@acceptedPost.PostId" method="post">
+                    <div id="destinationerror"></div>
+                    <form id="editDestinationForm">
                         <h5 class="modal-title">
                             Change Trip Destination
                         </h5>
                         <div class="mb-3 p-3">
                             <input type="text" name="newPostDestination" id="quantity" class="form-control" placeholder="Enter destination" required />&nbsp;
                         </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
                     </form>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" onclick="editTripDestination(@acceptedPost.PostId)">Submit</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -196,32 +201,23 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form id="editPriceForm" action="/agency/editpostprice/?id=@acceptedPost.PostId" method="post">
+                    <div id="priceerror"></div>
+                    <form id="editPriceForm">
                         <h5 class="modal-title">
                             Change Trip Price
                         </h5>
                         <div class="mb-3 p-3">
                             <input type="number" id="quantity" class="form-control" placeholder="1000 $" required name="newPostPrice" />&nbsp;
                         </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
                     </form>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" onclick="editPrice(@acceptedPost.PostId)">Submit</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 }
-<script src="~/Scripts/jquery.validate.js"></script>
-
-<script> 
-    $("#editTitleForm").validate();
-    $("#editTripPhotoForm").validate();
-    $("#editDetailsForm").validate();
-    $("#editTripDateForm").validate();
-    $("#editDestinationForm").validate();
-    $("#editPriceForm").validate();
-</script>
 
 
 

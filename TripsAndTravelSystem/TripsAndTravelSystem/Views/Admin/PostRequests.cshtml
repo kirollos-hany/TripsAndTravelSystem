@@ -75,14 +75,8 @@
                             <div class="col-sm-3 text-secondary">
                             </div>
                             <div class="container mt-5">
-                                <div class="row-cols-2">
-                                    <form action="/admin/acceptpost/?id=@pendingPost.PostId" method="post">
-                                        <button id="Accept" type="submit" class="btn btn-primary">Accept</button>
-                                    </form>
-                                    <form action="/admin/denypost/?id=@pendingPost.PostId" method="post">
-                                        <button id="Refuse" type="submit" class="btn btn-primary">Deny</button>
-                                    </form>
-                                </div>
+                                        <button id="Accept" type="submit" class="btn btn-primary" onclick="acceptPost(@pendingPost.PostId)">Accept</button>
+                                        <button id="Refuse" type="submit" class="btn btn-primary" onclick="denyPost(@pendingPost.PostId)">Deny</button>
                             </div>
                         </div>
                     </div>

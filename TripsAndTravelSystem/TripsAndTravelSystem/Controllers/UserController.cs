@@ -59,14 +59,15 @@ namespace TripsAndTravelSystem.Controllers
                 var u = await Task.Run(() => dbContext.Users.Where(user => user.Email.Equals(loginInfo.Email)).FirstOrDefault());
                 if (u != null && Crypto.VerifyHashedPassword(u.Password, loginInfo.Password))
                 {
+                    Session["id"] = u.UserId;
                     string url = "";
                     if (await authServices.AuthorizedAdmin(u.UserId))
                     {
-                        url = $"{UrlServices.BaseUrl}/admin/?id={u.UserId}";
+                        url = $"{UrlServices.BaseUrl}/admin/";
                     }
                     else if (await authServices.AuthroizedAgency(u.UserId))
                     {
-                        url = $"{UrlServices.BaseUrl}/agency/?id={u.UserId}";
+                        url = $"{UrlServices.BaseUrl}/agency/";
                     }
                     else if (await authServices.AuthroizedTraveler(u.UserId))
                     {
@@ -229,6 +230,13 @@ namespace TripsAndTravelSystem.Controllers
                 ErrorMessage = "Data not received, try again",
                 UserId = 0
             });
+
+        }
+
+        public ActionResult SignOut()
+        {
+            Session.Clear();
+            return RedirectToAction(actionName: "Index", controllerName: "Index");
         }
     }
 }

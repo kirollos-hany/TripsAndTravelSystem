@@ -1,7 +1,6 @@
-﻿
-@{
-    ViewBag.Title = "New_Post";
-    Layout = "~/Views/Share/_FactoryLayout.cshtml";
+﻿@{
+    ViewBag.Title = "NewPost";
+    Layout = "~/Views/Shared/_FactoryLayout.cshtml";
 }
 
 <div class="row p-4">
@@ -19,56 +18,53 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <div id="newPosterror">@ViewBag.ErrorMessage</div>
-
-                <form class="row g-3 " id="addPostForm" action="/agency/addnewpost" method="post" enctype="multipart/form-data">
+                <div id="newPosterror"></div>
+                <form class="row g-3 " id="addPostForm">
                     <div class="mb-3">
                         <label class="form-label">
                             Trip Price
                         </label>
-                        <input type="number" class="form-control " id="AgencyName" required name="trip_price">
+                        <input type="number" class="form-control "required name="trip_price">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">
                             Trip Title
                         </label>
-                        <input type="text" class="form-control " id="TripTitle" required maxlength="50" name="trip_title">
+                        <input type="text" class="form-control "  required maxlength="50" name="trip_title">
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">
                             Trip details
                         </label>
-                        <textarea type="text" class="form-control " id="Trip Details" required name="trip_details"></textarea>
+                        <textarea type="text" class="form-control " required name="trip_details"></textarea>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">
                             Trip Date
                         </label>
-                        <input type="datetime" class="form-control " id="Trip Date" required name="trip_date">
+                        <input type="date" class="form-control "  required name="trip_date">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">
                             Trip Destination
                         </label>
-                        <input type="text" class="form-control " id="Trip Destination" required name="trip_destination">
+                        <input type="text" class="form-control " required name="trip_destination">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">
                             Trip Image
                         </label>
-                        <input type="file" accept="images/*" class="form-control " id="TripImage" required name="trip_image">
-                    </div>
-                    <div class="col-12">
-                        <button class="btn btn-primary" type="submit">Submit</button>
+                        <input type="file" accept="images/*" class="form-control "  required name="trip_image">
                     </div>
                 </form>
+                <div class="col-12">
+                    <button class="btn btn-primary" type="submit" id="addPostBtn">Submit</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <script src="~/Scripts/jquery.validate.js"></script>
-<script>
-    $("#addPostForm").validate();
-</script>
+<script src="~/Scripts/addpost.js"></script>
 

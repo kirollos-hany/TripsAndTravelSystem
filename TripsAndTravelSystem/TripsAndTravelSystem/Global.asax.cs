@@ -13,6 +13,16 @@ namespace TripsAndTravelSystem
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            //increase max json length
+            foreach (var factory in ValueProviderFactories.Factories)
+            {
+                if (factory is JsonValueProviderFactory)
+                {
+                    ValueProviderFactories.Factories.Remove(factory as JsonValueProviderFactory);
+                    break;
+                }
+            }
+            ValueProviderFactories.Factories.Add(new CustomJsonValueProviderFactory());
         }
     }
 }

@@ -1,12 +1,12 @@
-﻿@using Trips_and_TravelSystem.Models;
-@model List<post>
+﻿@using TripsAndTravelSystem.Models;
+@model List<Post>
 @{
     ViewBag.Title = "History";
-    Layout = "~/Views/Share/_FactoryLayout.cshtml";
+    Layout = "~/Views/Shared/_FactoryLayout.cshtml";
 }
 @foreach (var post in Model)
 {
-    var agencyName = post.agency.first_name + " " + post.agency.last_name;
+    var agencyName = post.User.FirstName + " " + post.User.LastName;
     <div class="row d-flex align-items-center justify-content-center m-5">
         <div class="main-body">
             <div class="col-md-8">
@@ -18,7 +18,7 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="d-flex flex-column align-items-center text-center" id="xy">
-                                                <img src="/image/serveimage/?id=@post.agency_id" alt="Admin" class="rounded-circle" width="150" id="photo">
+                                                <img src="/image/serveimage/?id=@post.AgencyId" alt="Admin" class="rounded-circle" width="150" id="photo">
                                                 <div class="mt-3">
                                                     <h4>@agencyName</h4>
                                                 </div>
@@ -30,12 +30,12 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="d-flex flex-column align-items-center text-center">
-                                                <img src="/image/servepostimage/?id=@post.post_id" class="img-thumbnail" id="photo">
+                                                <img src="/image/servepostimage/?id=@post.PostId" class="img-thumbnail" id="photo">
                                                 <a id="Add" data-bs-toggle="modal" data-bs-target="#Trip_Photo"><i class="fas fa-edit" style="color:orange;">&#xE254;</i></a>
                                             </div>
                                         </div>
                                         <div class="mt-3 d-flex flex-column align-items-center text-center p-2">
-                                            <h4>@post.title</h4>
+                                            <h4>@post.Title</h4>
                                             <a id="Add" data-bs-toggle="modal" data-bs-target="#Trip_Title"><i class="fas fa-edit" style="color:orange;">&#xE254;</i></a>
                                         </div>
                                     </div>
@@ -48,7 +48,7 @@
                                 <h6 class="mb-0">Details</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                @post.details
+                                @post.Details
                                 <a id="Add" data-bs-toggle="modal" data-bs-target="#Tripdetails"><i class="fas fa-edit" style="color:orange;"></i></a>
 
                             </div>
@@ -59,7 +59,7 @@
                                 <h6 class="mb-0">Trip Date</h6>
                             </div>
                             <div class="col-sm-6 text-secondary">
-                                @post.trip_date
+                                @post.TripDate.ToShortDateString()
                             </div>
                             <div class="col-sm-3 text-secondary">
                                 <a id="Add" data-bs-toggle="modal" data-bs-target="#TripDate"><i class="fas fa-edit" style="color:orange;"></i></a>
@@ -72,7 +72,7 @@
                             </div>
 
                             <div class="col-sm-6 text-secondary">
-                                @post.destination
+                                @post.Destination
                             </div>
                             <div class="col-sm-3 text-secondary">
                                 <a id="Add" data-bs-toggle="modal" data-bs-target="#TripDestination"><i class="fas fa-edit" style="color:orange;"></i></a>
@@ -86,7 +86,7 @@
                             </div>
 
                             <div class="col-sm-6 text-secondary">
-                                @post.price
+                                @post.Price
                             </div>
                             <div class="col-sm-3 text-secondary">
                                 <a id="Add" data-bs-toggle="modal" data-bs-target="#Tripprice"><i class="fas fa-edit" style="color:orange;"></i></a>
@@ -100,24 +100,22 @@
                                     <i class="far fa-thumbs-up text-primary" id="like">
                                     </i>
                                 </a>
-                                <div id="my">@post.num_likes</div>
+                                <div id="my">@post.NumOfLikes</div>
                                 <div class="d-flex flex-row icons d-flex col-sm-9">
                                     <a class="link m-r-10">
                                         <i class="far fa-thumbs-down text-primary" id="like">
                                         </i>
                                     </a>
-                                    <div id="dis">@post.num_dislikes</div>
+                                    <div id="dis">@post.NumOfDislikes</div>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <span>State </span>
-                                    @post.status
+                                    <span>Status</span>
+                                    @post.Status
                                 </div>
                             </div>
                         </div>
                         <div class="container mt-5">
-                            <form action="/agency/deletepost/?id=@post.post_id" method="post">
-                                <button id="delete" type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">delete</button>
-                            </form>
+                                <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" onclick="deletePost(@post.PostId)">Delete</button>
                         </div>
                     </div>
                 </div>
@@ -130,15 +128,16 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form id="editTitleForm" action="/agency/editposttitle/?id=@post.post_id" method="post">
+                    <form id="editTitleForm">
+                        <div id="titleerror"></div>
                         <h5 class="modal-title">Change Trip Title</h5>
                         <div class="mb-3 p-3">
                             <input type="text" class="form-control" maxlength="50" placeholder="Title" required name="newTitle">
                         </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
                     </form>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" onclick="editPostTitle(@post.PostId)">Submit</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -149,15 +148,16 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form id="editTripPhotoForm" action="/agency/editpostphoto/?id=@post.post_id" method="post" enctype="multipart/form-data">
+                    <form id="editTripPhotoForm">
+                        <div id="photoerror"></div>
                         <h5 class="modal-title">Change Trip Photo</h5>
                         <div class="mb-3 p-3">
-                            <input class="form-control" type="file" id="formFile" required name="newPostPhoto">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <input class="form-control" accept="image/*" type="file" id="formFile" required name="newPostPhoto">
                         </div>
                     </form>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" onclick="editPostPhoto(@post.PostId)">Submit</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -169,15 +169,16 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form id="editDetailsForm" action="/agency/editpostdetails/?id=@post.post_id" method="post">
+                    <div id="detailserror"></div>
+                    <form id="editDetailsForm">
                         <h5 class="modal-title">Change Trip details</h5>
                         <div class="mb-3 p-3">
                             <textarea class="form-control" aria-label="With textarea" placeholder="Enter details" required name="newPostDetails"></textarea>
                         </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
                     </form>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" onclick="editPostDetails(@post.PostId)">Submit</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -188,17 +189,18 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form id="editTripDateForm" action="/agency/editpostdate/?id=@post.post_id" method="post">
+                    <div id="dateerror"></div>
+                    <form id="editTripDateForm">
                         <h5 class="modal-title">
                             Change Trip Date
                         </h5>
                         <div class="mb-3 p-3">
-                            <input type="datetime" class="form-control" name="newPostDate" required>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <input type="date" class="form-control" name="newPostDate" required>
                         </div>
                     </form>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" onclick="editTripDate(@post.PostId)">Submit</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -211,17 +213,18 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form id="editDestinationForm" action="/agency/editpostdestination/?id=@post.post_id" method="post">
+                    <div id="destinationerror"></div>
+                    <form id="editDestinationForm">
                         <h5 class="modal-title">
                             Change Trip Destination
                         </h5>
                         <div class="mb-3 p-3">
                             <input type="text" name="newPostDestination" id="quantity" class="form-control" placeholder="Enter destination" required />&nbsp;
                         </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
                     </form>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" onclick="editTripDestination(@post.PostId)">Submit</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -236,35 +239,21 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form id="editPriceForm" action="/agency/editpostprice/?id=@post.post_id" method="post">
+                    <div id="priceerror"></div>
+                    <form id="editPriceForm">
                         <h5 class="modal-title">
                             Change Trip Price
                         </h5>
                         <div class="mb-3 p-3">
                             <input type="number" id="quantity" class="form-control" placeholder="1000 $" required name="newPostPrice" />&nbsp;
                         </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
                     </form>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" onclick="editPrice(@post.PostId)">Submit</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 }
-
-
-
-
-
-
-<script src="~/Scripts/jquery.validate.js"></script>
-<script>
-    $("#editTitleForm").validate();
-    $("#editTripPhotoForm").validate();
-    $("#editDetailsForm").validate();
-    $("#editTripDateForm").validate();
-    $("#editDestinationForm").validate();
-    $("#editPriceForm").validate();
-</script>
 

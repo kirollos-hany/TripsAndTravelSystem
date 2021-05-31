@@ -136,6 +136,7 @@
       <DependentUpon>TripsAndTravelEntities.edmx</DependentUpon>
       <LastGenOutput>TripsAndTravelEntities.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\addpost.js" />
     <Content Include="Scripts\adduser.js" />
     <Content Include="Scripts\agency-answer-question.js" />
     <Content Include="Scripts\Agency.js" />
@@ -145,7 +146,9 @@
     <Content Include="Scripts\Bootstrap_js\bootstrap.esm.min.js" />
     <Content Include="Scripts\Bootstrap_js\bootstrap.js" />
     <Content Include="Scripts\Bootstrap_js\bootstrap.min.js" />
+    <Content Include="Scripts\deletepost.js" />
     <Content Include="Scripts\deleteuser.js" />
+    <Content Include="Scripts\editpost.js" />
     <Content Include="Scripts\edituser.js" />
     <Content Include="Scripts\IndexScript.js" />
     <None Include="Scripts\jquery-1.4.4-vsdoc.js" />
@@ -156,11 +159,13 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery\jquery.min.js" />
     <Content Include="Scripts\login.js" />
+    <Content Include="Scripts\postrequest.js" />
     <Content Include="Scripts\register.js" />
     <Content Include="Scripts\signout.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\CustomJsonValueProviderFactory.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AgencyController.cs" />
@@ -170,30 +175,42 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\DeleteUserModel.cs" />
-    <Compile Include="Models\DeleteUserResponse.cs" />
+    <Compile Include="Models\PostJsonModels\AddPostModel.cs" />
+    <Compile Include="Models\PostJsonModels\AddPostResponse.cs" />
+    <Compile Include="Models\PostJsonModels\DeletePostModel.cs" />
+    <Compile Include="Models\PostJsonModels\EditDestinationModel.cs" />
+    <Compile Include="Models\PostJsonModels\EditDetailsModel.cs" />
+    <Compile Include="Models\PostJsonModels\EditPriceModel.cs" />
+    <Compile Include="Models\PostJsonModels\EditTitleModel.cs" />
+    <Compile Include="Models\PostJsonModels\EditPostResponse.cs" />
+    <Compile Include="Models\PostJsonModels\EditTripDateModel.cs" />
+    <Compile Include="Models\PostJsonModels\EditTripPhotoModel.cs" />
+    <Compile Include="Models\PostRequestModel.cs" />
+    <Compile Include="Models\PostRequestResponse.cs" />
+    <Compile Include="Models\UserJsonModels\DeleteUserModel.cs" />
+    <Compile Include="Models\UserJsonModels\DeleteUserResponse.cs" />
     <Compile Include="Models\DislikedPost.cs">
       <DependentUpon>TripsAndTravelEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EditEmailModel.cs" />
-    <Compile Include="Models\EditNameModel.cs" />
-    <Compile Include="Models\EditPasswordModel.cs" />
-    <Compile Include="Models\EditPhoneNumberModel.cs" />
-    <Compile Include="Models\EditPhotoModel.cs" />
-    <Compile Include="Models\EditResponse.cs" />
+    <Compile Include="Models\UserJsonModels\EditEmailModel.cs" />
+    <Compile Include="Models\UserJsonModels\EditNameModel.cs" />
+    <Compile Include="Models\UserJsonModels\EditPasswordModel.cs" />
+    <Compile Include="Models\UserJsonModels\EditPhoneNumberModel.cs" />
+    <Compile Include="Models\UserJsonModels\EditPhotoModel.cs" />
+    <Compile Include="Models\UserJsonModels\EditResponse.cs" />
     <Compile Include="Models\FavoritePost.cs">
       <DependentUpon>TripsAndTravelEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LikedPost.cs">
       <DependentUpon>TripsAndTravelEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LoginModel.cs" />
-    <Compile Include="Models\LoginResponse.cs" />
+    <Compile Include="Models\UserJsonModels\LoginModel.cs" />
+    <Compile Include="Models\UserJsonModels\LoginResponse.cs" />
     <Compile Include="Models\Post.cs">
       <DependentUpon>TripsAndTravelEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\RegisterModel.cs" />
-    <Compile Include="Models\RegisterResponse.cs" />
+    <Compile Include="Models\UserJsonModels\RegisterModel.cs" />
+    <Compile Include="Models\UserJsonModels\RegisterResponse.cs" />
     <Compile Include="Models\TravelerQuestion.cs">
       <DependentUpon>TripsAndTravelEntities.tt</DependentUpon>
     </Compile>

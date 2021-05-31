@@ -1,5 +1,9 @@
-﻿const userId = localStorage.getItem("userId");
-if (userId != 0) {
+﻿window.addEventListener('beforeunload', (e) => {
+    e.preventDefault();
+    localStorage.clear();
+});
+const userId = localStorage.getItem("userId");
+if (userId != 0 && localStorage.getItem("redirectTo") !== null) {
     const registerModal = document.getElementById("registerModalBtn");
     registerModal.removeAttribute('data-bs-toggle');
     registerModal.removeAttribute('data-bs-target');
@@ -11,6 +15,7 @@ if (userId != 0) {
     loginModal.addEventListener('click', () => {
         signout();
     });
+    console.log(localStorage.getItem("redirectTo"));
     window.location = localStorage.getItem("redirectTo");
 }
 

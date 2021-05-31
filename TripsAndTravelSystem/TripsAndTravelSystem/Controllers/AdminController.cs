@@ -4,7 +4,7 @@ using TripsAndTravelSystem.Models;
 using TripsAndTravelSystem.Services;
 using System.Threading.Tasks;
 using System.Linq;
-using System.Collections.Generic;
+
 namespace TripsAndTravelSystem.Controllers
 {
     public class AdminController : Controller
@@ -14,12 +14,11 @@ namespace TripsAndTravelSystem.Controllers
         private readonly ImageServices imageServices = new ImageServices();
         public async Task<ActionResult> Index()
         {
-            if (Request.Params["id"] != null)
+            if (Session["id"] != null)
             {
                 try
                 {
-                    int id = Convert.ToInt32(Request.Params["id"]);
-                    Session["id"] = id;
+                    int id = Convert.ToInt32(Session["id"]);
                     if (await authServices.AuthorizedAdmin(id))
                     {
                         var admin = await dbContext.Users.FindAsync(id);
@@ -28,10 +27,10 @@ namespace TripsAndTravelSystem.Controllers
                 }
                 catch (FormatException)
                 {
-                    return RedirectToAction(actionName: "index", controllerName: "index");
+                    return RedirectToAction(actionName: "signout", controllerName: "user");
                 }
             }
-            return RedirectToAction(actionName: "index", controllerName: "index");
+            return RedirectToAction(actionName: "signout", controllerName: "user");
         }
 
         public async Task<ActionResult> UsersPage()
@@ -58,10 +57,10 @@ namespace TripsAndTravelSystem.Controllers
                 }
                 catch (FormatException)
                 {
-                    return RedirectToAction(actionName: "index", controllerName: "index");
+                    return RedirectToAction(actionName: "signout", controllerName: "user");
                 }
             }
-            return RedirectToAction(actionName: "index", controllerName: "index");
+            return RedirectToAction(actionName: "signout", controllerName: "user");
         }
 
         [HttpPost]
@@ -98,17 +97,80 @@ namespace TripsAndTravelSystem.Controllers
                 if (await authServices.AuthorizedAdmin(id))
                 {
                     var posts = await Task.Run(() => dbContext.Posts.Include("User").Where(post => post.Status.Equals(Post.PostStatus.ACCEPTED.ToString()) || post.Status.Equals(Post.PostStatus.DENIED.ToString())).ToList());
-                    ViewBag.AcceptedPosts = posts;
+                    ViewBag.Posts = posts;
                     return View();
                 }
             }
-            return RedirectToAction(actionName: "Index", controllerName: "Index");
+            return RedirectToAction(actionName: "signout", controllerName: "user");
         }
 
         public async Task<ActionResult> PostRequests()
         {
-            ViewBag.PendingPosts = new List<Post>();
-            return View();
+            if (Session["id"] != null)
+            {
+                int id = Convert.ToInt32(Session["id"]);
+                if (await authServices.AuthorizedAdmin(id))
+                {
+                    var posts = await Task.Run(() => dbContext.Posts.Include("User").Where(post => post.Status.Equals(Post.PostStatus.PENDING.ToString())).ToList());
+                    ViewBag.PendingPosts = posts;
+                    return View();
+                }
+            }
+            return RedirectToAction(actionName: "signout", controllerName: "user");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AcceptPost(PostRequestModel acceptModel)
+        {
+            if(acceptModel != null)
+            {
+                try
+                {
+                    int id = Convert.ToInt32(Session["id"]);
+                    if(await authServices.AuthorizedAdmin(id))
+                    {
+                        var post = await dbContext.Posts.FindAsync(acceptModel.PostId);
+                        post.Status = Post.PostStatus.ACCEPTED.ToString();
+                        await dbContext.SaveChangesAsync();
+                        return Json(new PostRequestResponse() { ErrorMessage = "Successful", PostId = post.PostId });
+                    }
+                    else
+                    {
+                        return Json(new PostRequestResponse() { ErrorMessage = "Unauthorized", PostId = 0 });
+                    }
+                }
+                catch (FormatException)
+                {
+                }
+            }
+            return Json(new PostRequestResponse() { ErrorMessage = "Failed to accept post, try again", PostId = 0 });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> DenyPost(PostRequestModel denyModel)
+        {
+            if (denyModel != null)
+            {
+                try
+                {
+                    int id = Convert.ToInt32(Session["id"]);
+                    if (await authServices.AuthorizedAdmin(id))
+                    {
+                        var post = await dbContext.Posts.FindAsync(denyModel.PostId);
+                        post.Status = Post.PostStatus.DENIED.ToString();
+                        await dbContext.SaveChangesAsync();
+                        return Json(new PostRequestResponse() { ErrorMessage = "Successful", PostId = post.PostId });
+                    }
+                    else
+                    {
+                        return Json(new PostRequestResponse() { ErrorMessage = "Unauthorized", PostId = 0 });
+                    }
+                }
+                catch (FormatException)
+                {
+                }
+            }
+            return Json(new PostRequestResponse() { ErrorMessage = "Failed to accept post, try again", PostId = 0 });
         }
     }
 }
