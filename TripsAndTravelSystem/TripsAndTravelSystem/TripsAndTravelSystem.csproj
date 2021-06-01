@@ -288,6 +288,7 @@
     <Content Include="Views\Admin\PostsPage.cshtml" />
     <Content Include="Views\Admin\PostRequests.cshtml" />
     <Content Include="Views\Admin\UsersPage.cshtml" />
+    <Content Include="Views\Index\TravelerProfile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -300,6 +301,7 @@
     <Folder Include="images\UploadedPhotos\AgencyPhotos\" />
     <Folder Include="images\UploadedPhotos\PostPhotos\" />
     <Folder Include="images\UploadedPhotos\TravelerPhotos\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

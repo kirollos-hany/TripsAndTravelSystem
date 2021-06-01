@@ -10,6 +10,10 @@ namespace TripsAndTravelSystem.Controllers
 {
     public class IndexController : Controller
     {
+        public ActionResult TravelerProfile()
+        {
+            return View();
+        }
         private readonly TripsAndTravelDatabaseEntities dbContext = new TripsAndTravelDatabaseEntities();
         private readonly AuthorizationServices authServices = new AuthorizationServices();
         public async Task<ActionResult> Index()

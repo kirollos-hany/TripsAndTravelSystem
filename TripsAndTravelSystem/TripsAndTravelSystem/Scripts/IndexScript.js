@@ -1,6 +1,8 @@
 ﻿$("#favoriteBtn").hide();
 $("#questionsBtn").hide();
 $("#favBtnIcon").hide();
+
+
 if (localStorage.getItem("userId") != 0 && localStorage.getItem("redirectTo") !== null) {
     const registerModal = document.getElementById("registerModalBtn");
     registerModal.removeAttribute('data-bs-toggle');
@@ -16,6 +18,7 @@ if (localStorage.getItem("userId") != 0 && localStorage.getItem("redirectTo") !=
     $("#favoriteBtn").show();
     $("#questionsBtn").show();
     $("#favBtnIcon").show();
+
     const errorMsg = document.getElementById("loginerror");
     const loginData = {
         Email: localStorage.getItem("email"),

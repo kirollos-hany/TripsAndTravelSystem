@@ -9,6 +9,7 @@ namespace TripsAndTravelSystem.Controllers
 {
     public class UserController : Controller
     {
+
         private readonly UserValidationServices validateUser = new UserValidationServices();
         private readonly ImageServices imageServices = new ImageServices();
         private readonly TripsAndTravelDatabaseEntities dbContext = new TripsAndTravelDatabaseEntities();
