@@ -30,18 +30,11 @@ namespace TripsAndTravelSystem.Controllers
         {
             if(Session["id"] != null)
             {
-                try
-                {
                     int id = Convert.ToInt32(Session["id"]);
                     if(await authServices.AuthroizedAgency(id))
                     {
                         return View();
                     }
-                }
-                catch (FormatException)
-                {
-
-                }
             }
             return RedirectToAction(actionName: "signout", controllerName: "user");
         }
@@ -52,15 +45,7 @@ namespace TripsAndTravelSystem.Controllers
         {
             if(postInfo != null && Session["id"] != null)
             {
-                int id = 0;
-                try
-                {
-                   id = Convert.ToInt32(Session["id"]);
-                }
-                catch (FormatException)
-                {
-                    return Json(new AddPostResponse() { ErrorMessage = "Not logged in, try again", UserId = 0 });
-                }
+                int id = Convert.ToInt32(Session["id"]);
                 var response = postValidation.ValidatePost(postInfo);
                 if(response.ErrorMessage == null)
                 {
@@ -88,19 +73,12 @@ namespace TripsAndTravelSystem.Controllers
         {
             if(Session["id"] != null)
             {
-                try
-                {
                     int id = Convert.ToInt32(Session["id"]);
                     if(await authServices.AuthroizedAgency(id))
                     {
                         var posts = await Task.Run(() => dbContext.Posts.Include("User").Where(post => post.AgencyId == id).ToList());
                         return View(posts);
                     }
-                }
-                catch (FormatException)
-                {
-                    return RedirectToAction(actionName: "signout", controllerName: "user");
-                }
             }
             return RedirectToAction(actionName: "signout", controllerName: "user");
         }
@@ -110,8 +88,6 @@ namespace TripsAndTravelSystem.Controllers
         {
             if(Session["id"] != null)
             {
-                try
-                {
                     int id = Convert.ToInt32(Session["id"]);
                     if(await authServices.AuthroizedAgency(id) || await authServices.AuthorizedAdmin(id))
                     {
@@ -120,11 +96,6 @@ namespace TripsAndTravelSystem.Controllers
                         await dbContext.SaveChangesAsync();
                         return Json(new EditPostResponse() { PostId = post.PostId, ErrorMessage = "Successful" });
                     }
-                }
-                catch (FormatException)
-                {
-                    return Json(new EditPostResponse() { PostId = 0, ErrorMessage = "Failed to delete, try again" });
-                }
             }
             return Json(new EditPostResponse() { PostId = 0, ErrorMessage = "Failed to delete, try again" });
         }
@@ -134,8 +105,6 @@ namespace TripsAndTravelSystem.Controllers
         {
             if(Session["id"] != null)
             {
-                try
-                {
                     int id = Convert.ToInt32(Session["id"]);
                     if (await authServices.AuthroizedAgency(id) || await authServices.AuthorizedAdmin(id))
                     {
@@ -151,11 +120,6 @@ namespace TripsAndTravelSystem.Controllers
                             return Json(new EditPostResponse() { ErrorMessage = postValidation.InvalidTitle, PostId = 0 });
                         }
                     }
-                }
-                catch (FormatException)
-                {
-                    return Json(new EditPostResponse() { ErrorMessage = "Failed to edit title, try again" , PostId = 0});
-                }
             }
             return Json(new EditPostResponse() { ErrorMessage = "Failed to edit title, try again", PostId = 0 });
         }
@@ -164,8 +128,6 @@ namespace TripsAndTravelSystem.Controllers
         {
             if (Session["id"] != null)
             {
-                try
-                {
                     int id = Convert.ToInt32(Session["id"]);
                     if (await authServices.AuthroizedAgency(id) || await authServices.AuthorizedAdmin(id))
                     {
@@ -175,11 +137,6 @@ namespace TripsAndTravelSystem.Controllers
                             await dbContext.SaveChangesAsync();
                             return Json(new EditPostResponse() { ErrorMessage = "Successful", PostId = post.PostId });
                     }
-                }
-                catch (FormatException)
-                {
-                    return Json(new EditPostResponse() { ErrorMessage = "Failed to edit photo, try again", PostId = 0 });
-                }
             }
             return Json(new EditPostResponse() { ErrorMessage = "Failed to edit photo, try again", PostId = 0 });
         }
@@ -189,8 +146,6 @@ namespace TripsAndTravelSystem.Controllers
         {
             if (Session["id"] != null)
             {
-                try
-                {
                     int id = Convert.ToInt32(Session["id"]);
                     if (await authServices.AuthroizedAgency(id) || await authServices.AuthorizedAdmin(id))
                     {
@@ -205,12 +160,7 @@ namespace TripsAndTravelSystem.Controllers
                         {
                             return Json(new EditPostResponse() { ErrorMessage = postValidation.InvalidDetails, PostId = 0 });
                         }
-                    }
-                }
-                catch (FormatException)
-                {
-                    return Json(new EditPostResponse() { ErrorMessage = "Failed to edit details, try again", PostId = 0 });
-                }
+                    }            
             }
             return Json(new EditPostResponse() { ErrorMessage = "Failed to edit details, try again", PostId = 0 });
         }
@@ -220,8 +170,6 @@ namespace TripsAndTravelSystem.Controllers
         {
             if (Session["id"] != null)
             {
-                try
-                {
                     int id = Convert.ToInt32(Session["id"]);
                     if (await authServices.AuthroizedAgency(id) || await authServices.AuthorizedAdmin(id))
                     {
@@ -230,11 +178,6 @@ namespace TripsAndTravelSystem.Controllers
                             await dbContext.SaveChangesAsync();
                             return Json(new EditPostResponse() { ErrorMessage = "Successful", PostId = post.PostId });
                     }
-                }
-                catch (FormatException)
-                {
-                    return Json(new EditPostResponse() { ErrorMessage = "Failed to edit date, try again", PostId = 0 });
-                }
             }
             return Json(new EditPostResponse() { ErrorMessage = "Failed to edit date, try again", PostId = 0 });
         }
@@ -243,8 +186,6 @@ namespace TripsAndTravelSystem.Controllers
         {
             if (Session["id"] != null)
             {
-                try
-                {
                     int id = Convert.ToInt32(Session["id"]);
                     if (await authServices.AuthroizedAgency(id) || await authServices.AuthorizedAdmin(id))
                     {
@@ -261,11 +202,6 @@ namespace TripsAndTravelSystem.Controllers
                         }
 
                     }
-                }
-                catch (FormatException)
-                {
-                    return Json(new EditPostResponse() { ErrorMessage = "Failed to edit destination, try again", PostId = 0 });
-                }
             }
             return Json(new EditPostResponse() { ErrorMessage = "Failed to edit destination, try again", PostId = 0 });
         }
@@ -275,8 +211,6 @@ namespace TripsAndTravelSystem.Controllers
         {
             if (Session["id"] != null)
             {
-                try
-                {
                     int id = Convert.ToInt32(Session["id"]);
                     if (await authServices.AuthroizedAgency(id) || await authServices.AuthorizedAdmin(id))
                     {
@@ -291,13 +225,7 @@ namespace TripsAndTravelSystem.Controllers
                         {
                             return Json(new EditPostResponse() { ErrorMessage = postValidation.InvalidPrice, PostId = 0 });
                         }
-
                     }
-                }
-                catch (FormatException)
-                {
-                    return Json(new EditPostResponse() { ErrorMessage = "Failed to edit price, try again", PostId = 0 });
-                }
             }
             return Json(new EditPostResponse() { ErrorMessage = "Failed to edit price, try again", PostId = 0 });
         }

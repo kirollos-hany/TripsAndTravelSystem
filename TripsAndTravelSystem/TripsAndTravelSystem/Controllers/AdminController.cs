@@ -16,19 +16,12 @@ namespace TripsAndTravelSystem.Controllers
         {
             if (Session["id"] != null)
             {
-                try
-                {
                     int id = Convert.ToInt32(Session["id"]);
                     if (await authServices.AuthorizedAdmin(id))
                     {
                         var admin = await dbContext.Users.FindAsync(id);
                         return View(admin);
                     }
-                }
-                catch (FormatException)
-                {
-                    return RedirectToAction(actionName: "signout", controllerName: "user");
-                }
             }
             return RedirectToAction(actionName: "signout", controllerName: "user");
         }
@@ -37,8 +30,6 @@ namespace TripsAndTravelSystem.Controllers
         {
             if (Session["id"] != null)
             {
-                try
-                {
                     int id = Convert.ToInt32(Session["id"]);
                     if (await authServices.AuthorizedAdmin(id))
                     {
@@ -54,11 +45,6 @@ namespace TripsAndTravelSystem.Controllers
                         ViewBag.Agencies = agencies;
                         return View();
                     }
-                }
-                catch (FormatException)
-                {
-                    return RedirectToAction(actionName: "signout", controllerName: "user");
-                }
             }
             return RedirectToAction(actionName: "signout", controllerName: "user");
         }
@@ -124,8 +110,6 @@ namespace TripsAndTravelSystem.Controllers
         {
             if(acceptModel != null)
             {
-                try
-                {
                     int id = Convert.ToInt32(Session["id"]);
                     if(await authServices.AuthorizedAdmin(id))
                     {
@@ -138,10 +122,6 @@ namespace TripsAndTravelSystem.Controllers
                     {
                         return Json(new PostRequestResponse() { ErrorMessage = "Unauthorized", PostId = 0 });
                     }
-                }
-                catch (FormatException)
-                {
-                }
             }
             return Json(new PostRequestResponse() { ErrorMessage = "Failed to accept post, try again", PostId = 0 });
         }
@@ -151,8 +131,6 @@ namespace TripsAndTravelSystem.Controllers
         {
             if (denyModel != null)
             {
-                try
-                {
                     int id = Convert.ToInt32(Session["id"]);
                     if (await authServices.AuthorizedAdmin(id))
                     {
@@ -165,10 +143,6 @@ namespace TripsAndTravelSystem.Controllers
                     {
                         return Json(new PostRequestResponse() { ErrorMessage = "Unauthorized", PostId = 0 });
                     }
-                }
-                catch (FormatException)
-                {
-                }
             }
             return Json(new PostRequestResponse() { ErrorMessage = "Failed to accept post, try again", PostId = 0 });
         }

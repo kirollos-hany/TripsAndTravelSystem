@@ -76,7 +76,7 @@ namespace TripsAndTravelSystem.Controllers
                     return Json(new LoginResponse()
                     {
                         UserId = u.UserId,
-                        ErrorMessage = null,
+                        ErrorMessage = "Successful",
                         RedirectUrl = url
                     });
                 }

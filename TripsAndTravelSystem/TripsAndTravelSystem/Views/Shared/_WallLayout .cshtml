@@ -1,6 +1,5 @@
 ﻿@using TripsAndTravelSystem.Models;
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -41,7 +40,6 @@
             left: 0;
             width: 100%;
         }
-
         .checked {
             color: orange;
         }
@@ -50,6 +48,12 @@
         }
         div.ex1 {
             padding-left: 50px;
+        }
+        .blue-color{
+            color:blue;
+        }
+        .yellow-color{
+            color:yellow;
         }
     </style>
 </head>
@@ -95,53 +99,46 @@
         <div class="modal-dialog h-500">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Enter Trip Price" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    <form class="d-flex" action="/index/" method="get">
+                        <input class="form-control me-2" type="search" placeholder="Enter Maximum Price" aria-label="Search" name="searchPrice">
+                        <button class="btn btn-outline-success" type="submit" id="searchByPriceBtn">Search</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <!--Filter By Agancy Name-->
+    <!--Filter By Agency Name-->
     <div class="modal fade" id="Name" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog h-500">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Enter Agency name" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    <form class="d-flex" action="/index/" method="get">
+                        <input class="form-control me-2" type="search" placeholder="Enter Agency name" aria-label="Search" name="searchName">
+                        <button class="btn btn-outline-success" type="submit" id="searchByNameBtn">Search</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
     <!--Filter By Trip Date-->
     <div class="modal fade" id="Date" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog h-500">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="date" placeholder="Enter Trip Date" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    <form class="d-flex" action="/index/" method="get">
+                        <input class="form-control me-2" type="date" placeholder="Enter Trip Date" aria-label="Search" name="searchDate">
+                        <button class="btn btn-outline-success" type="submit" id="searchByDateBtn">Search</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
-
-
     <div id="box-search">
         <div class="thumbnail text-center">
             <img src="~/images/1.jpg" alt="" class="img-fluid  ">
             <div class="caption">
                 <p style="font-size:80px;">
                     @Html.ActionLink("Trips and TravelSystem", "Index")
-                </p>
-                <p style="font-size:50px; color:wheat">
-                    Complete solution for travel agencies and tour operators.
                 </p>
             </div>
         </div>
@@ -247,13 +244,13 @@
             </li>
             <li class="nav-item p-3">
                 <p style="font-size:30px; color:black;">
-                    @Html.ActionLink("Favourite", "Favourite")
-                    <i class="fas fa-star text-warning"></i>
+                    @Html.ActionLink("Favourite", "Favourite", null, htmlAttributes: new { @id = "favoriteBtn" })
+                    <i class="fas fa-star text-warning" id="favBtnIcon"></i>
                 </p>
             </li>
             <li class="nav-item p-3">
                 <p style="font-size:30px; color:black;">
-                    @Html.ActionLink("Questions", "WellQuestions")
+                    @Html.ActionLink("Questions", "WellQuestions", null, htmlAttributes: new { @id = "questionsBtn" })
                 </p>
             </li>
         </ul>
@@ -310,7 +307,8 @@
     <script src="~/Scripts/jquery.validate.js"></script>
     <script src="~/Scripts/register.js"></script>
     <script src="~/Scripts/signout.js"></script>
-    <script src="~/Scripts/IndexScript.js"> </script>
     <script src="~/Scripts/login.js"></script>
+    <script src="~/Scripts/IndexScript.js"></script>
+    <script src="~/Scripts/travelerpostactions.js"></script>
 </body>
 </html>

@@ -1,8 +1,12 @@
 ﻿async function signout() {
     await SignOut();
+    localStorage.clear();
     localStorage.setItem("userId", 0);
     localStorage.setItem("redirectTo", "http://localhost:59738/");
-    window.location = localStorage.getItem("redirectTo");
+    if (window.location.href === "http://localhost:59738/") {
+        window.location.reload();
+    }
+    window.location.href = localStorage.getItem("redirectTo");
 }
 
 $("#signout").click(() => {
@@ -15,3 +19,4 @@ async function SignOut() {
         method: "GET",
     }).then(response => console.log(response)).catch(err => console.log(err));
 }
+

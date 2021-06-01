@@ -1,90 +1,101 @@
-﻿@{
+﻿@using TripsAndTravelSystem.Models;
+@model List<Post>
+@{
     ViewBag.Title = "Favourite";
-    Layout = "~/Views/Share/_WallLayout .cshtml";
+    Layout = "~/Views/Shared/_WallLayout .cshtml";
 }
-@foreach (var post in ViewBag.FavoritePosts)
+@foreach (var post in Model)
 {
-    var agencyName = post.agency.first_name + " " + post.agency.last_name;
-    <div class="row d-flex align-items-center justify-content-center m-5">
-        <div class="col-md-6">
-            <div class="card border border-white p-5 container">
-                <div class="d-flex justify-content-between p-2 px-3">
-                    <!--Agancy Name and photo-->
-                    <div class="d-flex flex-row align-items-lg-center">
-                        <img src="/image/serveimage/?id=@post.agency_id" width="50" class="rounded-circle p-2">
-                        <div class=" flex-column p-2">
-                            <span class="font-weight-bold">@agencyName</span>
-                        </div>
+<div class="row d-flex align-items-center justify-content-center m-5">
+    <div class="col-md-6">
+        <div class="card border border-white p-5 container">
+            <div class="d-flex justify-content-between p-2 px-3">
+                <!--Agancy Name and photo-->
+                <div class="d-flex flex-row align-items-lg-center">
+                    <img src="/image/serveimage/?id=@post.User.UserId" width="50" class="rounded-circle p-2">
+                    <div class=" flex-column p-2">
+                        @{
+                            var agencyName = post.User.FirstName + " " + post.User.LastName;
+                        }
+                        <span class="font-weight-bold">@agencyName</span>
                     </div>
-                    <div class="d-flex flex-row mt-1 ellipsis">
-                        <small class="mr-2">@post.post_date</small>
-                    </div>
-                    <!------------------------------------>
                 </div>
-                <!--Tour Image-->
-                <img src="/image/servepostimage/?id=@post.post_id" class="img-fluid rounded p-1" alt="...">
+                <div class="d-flex flex-row mt-1 ellipsis">
+                    <small class="mr-2">@post.PostDate.ToShortDateString()</small>
+                </div>
                 <!------------------------------------>
-                <!--Trip Title and Date ,description....-->
-                <div class="p-2">
-                    <h3>@post.title</h3>
-                    <p class="text-justify">
-                        @post.details
+            </div>
+            <!--Tour Image-->
+            <img src="/image/servepostimage/?id=@post.PostId" class="img-fluid rounded p-1" alt="...">
+            <!------------------------------------>
+            <!--Trip Title and Date ,description....-->
+            <div class="p-2">
+                <h3>@post.Title</h3>
+                <p class="text-justify">
+                    @post.Details
 
-                    </p>
-                    <p>Trip Date : <span>@post.trip_date</span></p>
-                    <p>Trip Destination : <span>@post.destination</span></p>
-                    <hr>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="d-flex flex-row icons d-flex align-items-center">
-                            <a onclick="Likes(@post.num_likes, @post.post_id)" class="link m-r-10">
-                                <i class="far fa-thumbs-up text-primary" id="like">
+                </p>
+                <p>Trip Date : <span>@post.TripDate.ToShortDateString()</span></p>
+                <p>Trip Destination : <span>@post.Destination</span></p>
+                <p>Trip Price: <span>@post.Price</span></p>
+                <hr>
+                @{
+                    bool value;
+                    bool dislikeValue;
+                    bool isFavorite;
+                    ViewBag.IsDisliked.TryGetValue(post.PostId, out dislikeValue);
+                    ViewBag.IsLiked.TryGetValue(post.PostId, out value);
+                    ViewBag.IsFavorite.TryGetValue(post.PostId, out isFavorite);
+                }
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex flex-row icons d-flex align-items-center">
+                        <a class="link m-r-10">
+                            @if (value)
+                            {
+                                <i class="fa fa-thumbs-up text-primary blue-color" onclick="likePost(@post.PostId)">
                                 </i>
-                            </a>
-                            @{
-                                var divId = $"my{post.post_id}";
                             }
-                            <div id="@divId">@post.num_likes</div>Likes
-                        </div>
-                        <!------------------------------------>
-                        <!-- Comment-->
-                        <div class="d-flex flex-row muted-color align-items-center">
-                            <span class="p-2">@post.post_comments.Count Comments </span>
-                            <i class="far fa-star text-warning fa-4x"></i>
-                        </div>
-                    </div>
-                    <hr>
-                    @foreach (var comment in post.post_comments)
-                    {
-                        <div class="container-fluid ">
-                            <div class="row d-flex ">
-                                <div class="col-md-12">
-                                    <div class="comment-section">
-                                        <div class="card m-2 ">
-                                            <div class="d-flex justify-content-between mt-2">
-                                                <div class="d-flex flex-row ">
-                                                    <div class="user-image p-2"> <img src="/image/serveimage/?id=@comment.user_id" width="40" class="rounded-circle"> </div>
-                                                </div>
-                                            </div>
-                                            <p class="content">@comment.comment</p>
-                                        </div>
+                            else
+                            {
+                                <i class="far fa-thumbs-up text-primary" onclick="likePost(@post.PostId)">
+                                </i>
+                            }
 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr />
-                    }
-                    <!--Add Comment-->
-                    <div class="form">
-                        <form id="commentForm" action="/index/addcomment/?id=@post.post_id" method="post">
-                            <input class="form-control" placeholder="Write a comment..." required name="newComment">
-                            <div class="mt-2 d-flex justify-content-end"> <button class="btn btn-primary btn-sm ms-1" type="submit">Post comment</button> </div>
-                        </form>
+                        </a>
+                        <div>@post.NumOfLikes</div>
                     </div>
+                    <div class="d-flex flex-row icons d-flex align-items-center">
+                        <a class="link m-r-10">
+                            @if (dislikeValue)
+                            {
+                                <i class="fa fa-thumbs-down text-primary blue-color" onclick="dislikePost(@post.PostId)">
+                                </i> }
+                            else
+                            {
+                                <i class="far fa-thumbs-down text-primary" onclick="dislikePost(@post.PostId)">
+                                </i>
+                            }
+                        </a>
+                        <div>@post.NumOfDislikes</div>
+                    </div>
+                    @if (isFavorite)
+                    {
+                        <div class="d-flex flex-row muted-color align-items-center">
+                            <i class="fa fa-star text-warning fa-4x yellow-color" onclick="favoritePost(@post.PostId)"></i>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="d-flex flex-row muted-color align-items-center">
+                            <i class="far fa-star text-warning fa-4x" onclick="favoritePost(@post.PostId)"></i>
+                        </div>
+                    }
                 </div>
+                <hr>
             </div>
         </div>
     </div>
+</div>
 }
 
 

@@ -1,9 +1,7 @@
-﻿window.addEventListener('beforeunload', (e) => {
-    e.preventDefault();
-    localStorage.clear();
-});
-const userId = localStorage.getItem("userId");
-if (userId != 0 && localStorage.getItem("redirectTo") !== null) {
+﻿$("#favoriteBtn").hide();
+$("#questionsBtn").hide();
+$("#favBtnIcon").hide();
+if (localStorage.getItem("userId") != 0 && localStorage.getItem("redirectTo") !== null) {
     const registerModal = document.getElementById("registerModalBtn");
     registerModal.removeAttribute('data-bs-toggle');
     registerModal.removeAttribute('data-bs-target');
@@ -15,16 +13,21 @@ if (userId != 0 && localStorage.getItem("redirectTo") !== null) {
     loginModal.addEventListener('click', () => {
         signout();
     });
-    console.log(localStorage.getItem("redirectTo"));
-    window.location = localStorage.getItem("redirectTo");
+    $("#favoriteBtn").show();
+    $("#questionsBtn").show();
+    $("#favBtnIcon").show();
+    const errorMsg = document.getElementById("loginerror");
+    const loginData = {
+        Email: localStorage.getItem("email"),
+        Password: localStorage.getItem("password"),
+    }
+    if (localStorage.getItem("redirectTo") !== window.location.href) {
+        login(loginData, errorMsg);
+    } else {
+        loginNoRedirect(loginData, errorMsg);
+    }
 }
 
-$('.fa-thumbs-up').click(function () {
-    $(this).toggleClass('fas far');
-})
-$('.fa-star').click(function () {
-    $(this).toggleClass('fas far');
-})
 
 async function Likes(L, postId) {
         if (document.getElementById("my" + postId).innerHTML == L) {

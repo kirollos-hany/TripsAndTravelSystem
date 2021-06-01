@@ -158,6 +158,7 @@
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery\jquery.min.js" />
+    <Content Include="Scripts\travelerpostactions.js" />
     <Content Include="Scripts\login.js" />
     <Content Include="Scripts\postrequest.js" />
     <Content Include="Scripts\register.js" />
@@ -187,6 +188,8 @@
     <Compile Include="Models\PostJsonModels\EditTripPhotoModel.cs" />
     <Compile Include="Models\PostRequestModel.cs" />
     <Compile Include="Models\PostRequestResponse.cs" />
+    <Compile Include="Models\TravelerJsonModels\TravelerActionModel.cs" />
+    <Compile Include="Models\TravelerJsonModels\TravelerActionResponse.cs" />
     <Compile Include="Models\UserJsonModels\DeleteUserModel.cs" />
     <Compile Include="Models\UserJsonModels\DeleteUserResponse.cs" />
     <Compile Include="Models\DislikedPost.cs">
