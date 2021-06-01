@@ -68,7 +68,7 @@ async function PostRegisterData(data, error){
             const loginData = { Email: data.Email, Password: data.Password };
             loginUser(loginData);
         } else {
-            error.innerHTML = data.ErrorMessage;
+            error.innerHTML = responseData.ErrorMessage;
         }
     }).catch(error => console.log(error));
 }
