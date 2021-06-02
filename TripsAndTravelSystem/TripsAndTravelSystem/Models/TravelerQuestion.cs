@@ -19,10 +19,10 @@ namespace TripsAndTravelSystem.Models
         public int AgencyId { get; set; }
         public int TravelerId { get; set; }
         public System.DateTime QuestionDate { get; set; }
-        public System.DateTime AnswerDate { get; set; }
+        public Nullable<System.DateTime> AnswerDate { get; set; }
         public string Answer { get; set; }
     
-        public virtual User User { get; set; }
-        public virtual User User1 { get; set; }
+        public virtual User Agency { get; set; }
+        public virtual User Traveler { get; set; }
     }
 }

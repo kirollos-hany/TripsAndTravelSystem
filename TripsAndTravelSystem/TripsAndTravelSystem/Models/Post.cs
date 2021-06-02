@@ -21,9 +21,7 @@ namespace TripsAndTravelSystem.Models
             this.FavoritePosts = new HashSet<FavoritePost>();
             this.LikedPosts = new HashSet<LikedPost>();
         }
-
-        public enum PostStatus { ACCEPTED, DENIED, PENDING}
-    
+    public enum PostStatus { ACCEPTED, DENIED, PENDING}
         public int PostId { get; set; }
         public int AgencyId { get; set; }
         public string Title { get; set; }

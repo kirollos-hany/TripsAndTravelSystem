@@ -229,5 +229,37 @@ namespace TripsAndTravelSystem.Controllers
             }
             return Json(new EditPostResponse() { ErrorMessage = "Failed to edit price, try again", PostId = 0 });
         }
+
+        public async Task<ActionResult> AgencyQuestions()
+        {
+            if (Session["id"] != null)
+            {
+             int id = Convert.ToInt32(Session["id"]);
+             if(await authServices.AuthroizedAgency(id))
+            {
+                var questions = await Task.Run(() => dbContext.TravelerQuestions.Where(q => q.AgencyId == id).ToList());
+                return View(questions);
+            }
+           }
+            return RedirectToAction(actionName: "signout", controllerName: "user");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AnswerQuestion(int questionId, string answer)
+        {
+            if(Session["id"] != null)
+            {
+                int id = Convert.ToInt32(Session["id"]);
+                if(await authServices.AuthroizedAgency(id))
+                {
+                    var question = await dbContext.TravelerQuestions.FindAsync(questionId);
+                    question.Answer = answer;
+                    question.AnswerDate = DateTime.Now;
+                    await dbContext.SaveChangesAsync();
+                    return Json(new { questionId });
+                }
+            }
+            return Json(new { questionId = 0 });
+        }
     }
 }

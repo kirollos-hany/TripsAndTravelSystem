@@ -138,7 +138,7 @@
     </Content>
     <Content Include="Scripts\addpost.js" />
     <Content Include="Scripts\adduser.js" />
-    <Content Include="Scripts\agency-answer-question.js" />
+    <Content Include="Scripts\questions.js" />
     <Content Include="Scripts\Agency.js" />
     <Content Include="Scripts\Bootstrap_js\bootstrap.bundle.js" />
     <Content Include="Scripts\Bootstrap_js\bootstrap.bundle.min.js" />
@@ -279,11 +279,11 @@
     <Content Include="Views\Shared\_WallLayout .cshtml" />
     <Content Include="Views\Index\Favourite.cshtml" />
     <Content Include="Views\Index\Index.cshtml" />
-    <Content Include="Views\Index\WellQuestions.cshtml" />
+    <Content Include="Views\Index\Questions.cshtml" />
     <Content Include="Views\Agency\Index.cshtml" />
     <Content Include="Views\Agency\History.cshtml" />
     <Content Include="Views\Agency\NewPost.cshtml" />
-    <Content Include="Views\Agency\Questions.cshtml" />
+    <Content Include="Views\Agency\AgencyQuestions.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\PostsPage.cshtml" />
     <Content Include="Views\Admin\PostRequests.cshtml" />
@@ -301,7 +301,6 @@
     <Folder Include="images\UploadedPhotos\AgencyPhotos\" />
     <Folder Include="images\UploadedPhotos\PostPhotos\" />
     <Folder Include="images\UploadedPhotos\TravelerPhotos\" />
-    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

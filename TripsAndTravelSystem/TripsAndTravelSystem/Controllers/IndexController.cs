@@ -10,10 +10,6 @@ namespace TripsAndTravelSystem.Controllers
 {
     public class IndexController : Controller
     {
-        public ActionResult TravelerProfile()
-        {
-            return View();
-        }
         private readonly TripsAndTravelDatabaseEntities dbContext = new TripsAndTravelDatabaseEntities();
         private readonly AuthorizationServices authServices = new AuthorizationServices();
         public async Task<ActionResult> Index()
@@ -229,6 +225,53 @@ namespace TripsAndTravelSystem.Controllers
                 }
             }
             return RedirectToAction(actionName: "signout", controllerName: "user");
+        }
+
+        public async Task<ActionResult> TravelerProfile()
+        {
+            if (Session["id"] != null)
+            {
+                int id = Convert.ToInt32(Session["id"]);
+                var user = await dbContext.Users.FindAsync(id);
+                return View(user);
+            }
+            return RedirectToAction(actionName: "signout", controllerName: "user");
+        }
+        public async Task<ActionResult> Questions()
+        {
+            if(Session["id"] != null)
+            {
+                int id = Convert.ToInt32(Session["id"]);
+                if(await authServices.AuthroizedTraveler(id))
+                {
+                    var questions = await Task.Run(() => dbContext.TravelerQuestions.Where(q => q.TravelerId == id).ToList());
+                    var agencies = await Task.Run(() => dbContext.Users.Where(u => u.UserRole.Equals(Models.User.UserRoles.Agency.ToString())).ToList());
+                    ViewBag.Agencies = agencies;
+                    return View(questions);
+                }
+            }
+            return RedirectToAction(actionName: "signout", controllerName: "user") ;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddQuestion(int AgencyId, string Question)
+        {
+            if(Session["id"] != null)
+            {
+                int id = Convert.ToInt32(Session["id"]);
+                if(await authServices.AuthroizedTraveler(id))
+                {
+                    var question = new TravelerQuestion();
+                    question.AgencyId = AgencyId;
+                    question.Question = Question;
+                    question.QuestionDate = DateTime.Now;
+                    question.TravelerId = id;
+                    dbContext.TravelerQuestions.Add(question);
+                    await dbContext.SaveChangesAsync();
+                    return Json(new { AgencyId });
+                }
+            }
+            return Json(new { AgencyId = 0 });
         }
     }
 }

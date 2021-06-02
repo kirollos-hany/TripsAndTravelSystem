@@ -4,13 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5bf74f398df94a649c826c60df6f9d82" Name="Diagram1" ZoomLevel="72">
+      <Diagram DiagramId="5bf74f398df94a649c826c60df6f9d82" Name="Diagram1" ZoomLevel="94">
         <EntityTypeShape EntityType="TripsAndTravelDatabaseModel.DislikedPost" Width="1.5" PointX="5.25" PointY="11.875" IsExpanded="true" />
         <EntityTypeShape EntityType="TripsAndTravelDatabaseModel.FavoritePost" Width="1.5" PointX="5.25" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="TripsAndTravelDatabaseModel.LikedPost" Width="1.5" PointX="8.625" PointY="12" IsExpanded="true" />
         <EntityTypeShape EntityType="TripsAndTravelDatabaseModel.Post" Width="1.5" PointX="0.5" PointY="14.125" IsExpanded="true" />
         <EntityTypeShape EntityType="TripsAndTravelDatabaseModel.TravelerQuestion" Width="1.5" PointX="6.125" PointY="15.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TripsAndTravelDatabaseModel.User" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TripsAndTravelDatabaseModel.User" Width="3.125" PointX="0.75" PointY="7.625" IsExpanded="true" />
         <AssociationConnector Association="TripsAndTravelDatabaseModel.FK_DislikedPosts_Posts" ManuallyRouted="false" />
         <AssociationConnector Association="TripsAndTravelDatabaseModel.FK_DislikedPosts_Users" ManuallyRouted="false" />
         <AssociationConnector Association="TripsAndTravelDatabaseModel.FK_FavoritePosts_Posts" ManuallyRouted="false" />

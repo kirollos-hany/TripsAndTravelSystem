@@ -1,4 +1,5 @@
-﻿
+﻿@using TripsAndTravelSystem.Models;
+@model User
 @{
     ViewBag.Title = "TravelerProfile";
     Layout = "~/Views/Shared/_WallLayout .cshtml";
@@ -15,10 +16,10 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="d-flex flex-column align-items-center text-center" id="xy">
-                                            <img src="/image/serveimage/?id=UserId" alt="Traveler_Photo" class="rounded-circle" width="150" id="photo">
+                                            <img src="/image/serveimage/?id=@Model.UserId" alt="Traveler_Photo" class="rounded-circle" width="150" id="photo">
                                             <label for="file" id="uploadBtn" data-bs-toggle="modal" data-bs-target="#Traveler_Photo">Choose Photo</label>
                                             <div class="mt-3">
-                                                <h4>Email</h4>
+                                                <h4>@Model.Email</h4>
                                                 <a id="Add" data-bs-toggle="modal" data-bs-target="#Email"><i class="fas fa-edit" style="color:orange;"></i></a>
                                             </div>
                                         </div>
@@ -33,7 +34,7 @@
                             <h6 class="mb-0">First Name</h6>
                         </div>
                         <div class="col-sm-6 text-secondary">
-                            FirstName
+                            @Model.FirstName
                         </div>
                         <div class="col-sm-3 text-secondary">
                             <a id="Add" data-bs-toggle="modal" data-bs-target="#FirstName"><i class="fas fa-edit" style="color:orange;"></i></a>
@@ -45,7 +46,7 @@
                             <h6 class="mb-0">Last Name</h6>
                         </div>
                         <div class="col-sm-6 text-secondary">
-                            LastName
+                            @Model.LastName
                         </div>
                         <div class="col-sm-3 text-secondary">
                             <a id="Add" data-bs-toggle="modal" data-bs-target="#LastName"><i class="fas fa-edit" style="color:orange;"></i></a>
@@ -57,7 +58,7 @@
                             <h6 class="mb-0">Phone Number</h6>
                         </div>
                         <div class="col-sm-6 text-secondary">
-                            PhoneNumber
+                            @Model.PhoneNumber
                         </div>
                         <div class="col-sm-3 text-secondary">
                             <a id="Add" data-bs-toggle="modal" data-bs-target="#Phone"><i class="fas fa-edit" style="color:orange;"></i></a>
@@ -68,9 +69,6 @@
                         <div class="col-sm-3">
                             <h6 class="mb-0">Password</h6>
                         </div>
-                        <div class="col-sm-6 text-secondary">
-                            password
-                        </div>
                         <div class="col-sm-3 text-secondary">
                             <a id="Add" data-bs-toggle="modal" data-bs-target="#pass"><i class="fas fa-edit" style="color:orange;"></i></a>
                         </div>
@@ -79,7 +77,6 @@
 
                 </div>
             </div>
-
         </div>
     </div>
 </div>

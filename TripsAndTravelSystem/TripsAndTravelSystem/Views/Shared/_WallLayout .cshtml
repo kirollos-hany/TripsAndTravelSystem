@@ -90,16 +90,7 @@
                         Login
                     </button>
                 </li>
-                <li class="list-inline-item">
-                    <button type="button" class="btn btn-primary">
-                        @Html.ActionLink("Profile", "TravelerProfile")
-                    </button>
-
-
-                </li>
             </ul>
-
-
         </div>
     </nav>
 
@@ -259,8 +250,13 @@
             </li>
             <li class="nav-item p-3">
                 <p style="font-size:30px; color:black;">
-                    @Html.ActionLink("Questions", "WellQuestions", null, htmlAttributes: new { @id = "questionsBtn" })
+                    @Html.ActionLink("Questions", "Questions", null, htmlAttributes: new { @id = "questionsBtn" })
                 </p>
+            </li>
+            <li class="nav-item p-3">
+                <p style="font-size:30px; color:black;">
+                    @Html.ActionLink("Profile", "TravelerProfile",null, htmlAttributes: new { @id="travelerProfileBtn"})
+                </p> 
             </li>
         </ul>
     </div>
@@ -310,14 +306,69 @@
         </div>
         <!-- Copyright -->
     </footer>
-    <script src="~/Script/jquery/jquery.min.js"></script>
+    <script src="~/Scripts/jquery/jquery.min.js"></script>
     <script src="~/Scripts/Bootstrap_js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
     <script src="~/Scripts/jquery.validate.js"></script>
     <script src="~/Scripts/register.js"></script>
     <script src="~/Scripts/signout.js"></script>
     <script src="~/Scripts/login.js"></script>
-    <script src="~/Scripts/IndexScript.js"></script>
+    <script>
+        async function loginNoRedirect(loginData, error) {
+            const url = "http://localhost:59738/user/login";
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json; charset=UTF-8"
+                },
+                body: JSON.stringify(loginData)
+            }).then(response => response.json()).then((data) => {
+                if (data.UserId !== 0) {
+                    error.innerHTML = data.ErrorMessage;
+                    localStorage.setItem("userId", data.UserId);
+                    localStorage.setItem("redirectTo", data.RedirectUrl);
+                    localStorage.setItem("email", loginData.Email);
+                    localStorage.setItem("password", loginData.Password);
+                    localStorage.setItem("isLogged", true);
+                } else if (data.UserId === 0) {
+                    error.innerHTML = data.ErrorMessage;
+                }
+            }).catch(err => console.log(err));
+        }
+    </script>
     <script src="~/Scripts/travelerpostactions.js"></script>
+    <script>
+        $("#favoriteBtn").hide();
+        $("#questionsBtn").hide();
+        $("#favBtnIcon").hide();
+        $("#travelerProfileBtn").hide();
+        if (localStorage.getItem("userId") != 0 && localStorage.getItem("redirectTo") !== null) {
+            const errorMsg = document.getElementById("loginerror");
+            const loginData = {
+                Email: localStorage.getItem("email"),
+                Password: localStorage.getItem("password"),
+            }
+            if (localStorage.getItem("redirectTo") !== window.location.href && localStorage.getItem("isLogged") === null) {
+                login(loginData, errorMsg);
+            } else if (localStorage.getItem("isLogged") === null) {
+                loginNoRedirect(loginData, errorMsg);
+            }
+            $("#favoriteBtn").show();
+            $("#questionsBtn").show();
+            $("#favBtnIcon").show();
+            $("#travelerProfileBtn").show();
+            $("#registerModalBtn").hide();
+            const loginModal = document.getElementById("loginModalBtn");
+            loginModal.removeAttribute('data-bs-toggle');
+            loginModal.removeAttribute('data-bs-target');
+            loginModal.innerHTML = "SignOut";
+            loginModal.addEventListener('click', () => {
+                signout();
+            });
+        }
+        localStorage.removeItem("isLogged");
+    </script>
+    <script src="~/Scripts/edituser.js"></script>
+    <script src="~/Scripts/questions.js"></script>
 </body>
 </html>

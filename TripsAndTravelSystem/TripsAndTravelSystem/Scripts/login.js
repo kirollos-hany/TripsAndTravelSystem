@@ -28,6 +28,7 @@ async function login(loginData, error) {
             localStorage.setItem("redirectTo", data.RedirectUrl);
             localStorage.setItem("email", loginData.Email);
             localStorage.setItem("password", loginData.Password);
+            localStorage.setItem("isLogged", true);
             window.location.href = data.RedirectUrl;
         } else if (data.UserId === 0) {
             error.innerHTML = data.ErrorMessage;
@@ -35,24 +36,5 @@ async function login(loginData, error) {
     }).catch(err => console.log(err));
 }
 
-async function loginNoRedirect(loginData, error) {
-    const url = "http://localhost:59738/user/login";
-    fetch(url, {
-        method: "POST",
-        headers: {
-            "content-type": "application/json; charset=UTF-8"
-        },
-        body: JSON.stringify(loginData)
-    }).then(response => response.json()).then((data) => {
-        if (data.UserId !== 0) {
-            error.innerHTML = data.ErrorMessage;
-            localStorage.setItem("userId", data.UserId);
-            localStorage.setItem("redirectTo", data.RedirectUrl);
-            localStorage.setItem("email", loginData.Email);
-            localStorage.setItem("password", loginData.Password);
-        } else if (data.UserId === 0) {
-            error.innerHTML = data.ErrorMessage;
-        }
-    }).catch(err => console.log(err));
-}
+
 

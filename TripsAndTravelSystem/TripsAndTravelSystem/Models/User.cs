@@ -21,11 +21,10 @@ namespace TripsAndTravelSystem.Models
             this.FavoritePosts = new HashSet<FavoritePost>();
             this.LikedPosts = new HashSet<LikedPost>();
             this.Posts = new HashSet<Post>();
+            this.AgencyQuestions = new HashSet<TravelerQuestion>();
             this.TravelerQuestions = new HashSet<TravelerQuestion>();
-            this.TravelerQuestions1 = new HashSet<TravelerQuestion>();
         }
-        public enum UserRoles { Agency, Traveler, Admin}
-    
+        public enum UserRoles { Admin, Agency, Traveler}
         public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -44,8 +43,8 @@ namespace TripsAndTravelSystem.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Post> Posts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TravelerQuestion> TravelerQuestions { get; set; }
+        public virtual ICollection<TravelerQuestion> AgencyQuestions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TravelerQuestion> TravelerQuestions1 { get; set; }
+        public virtual ICollection<TravelerQuestion> TravelerQuestions { get; set; }
     }
 }

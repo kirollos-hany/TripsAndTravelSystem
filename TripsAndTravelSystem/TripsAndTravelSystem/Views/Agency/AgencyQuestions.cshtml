@@ -1,0 +1,71 @@
+﻿@using TripsAndTravelSystem.Models
+@model List<TravelerQuestion>
+@{
+    ViewBag.Title = "Questions";
+    Layout = "~/Views/Shared/_FactoryLayout.cshtml";
+}
+@foreach (var question in Model)
+{
+    <div class="container mt-5 mb-5">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6">
+                <div class="comment-section">
+                    <div class="card p-3 bg-white mt-3">
+                        <div class="d-flex justify-content-between mt-2">
+
+                            <div class="d-flex flex-row">
+                                <div class="user-image"> <img src="/image/serveimage/?id=@question.TravelerId" width="40" class="rounded-circle"> </div>
+                                <div class="d-flex flex-column">
+                                    @{
+                                        var userName = question.Traveler.FirstName + " " + question.Traveler.LastName;
+                                    }
+                                    <h6 class="mb-0">@userName</h6> <span class="date">@question.QuestionDate.ToShortDateString()</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="content">>@question.Question</p>
+                            <div class="container-fluid ">
+                                <div class="row d-flex ">
+                                    <div class="col-md-12">
+                                        <div class="comment-section">
+                                            <div class="card m-2 ">
+                                                <div class="d-flex justify-content-between mt-2">
+                                                    <div class="d-flex flex-row ">
+                                                        <div class="user-image p-2"> <img src="/image/serveimage/?id=@question.AgencyId" width="40" class="rounded-circle"> </div>
+                                                    </div>
+                                                </div>
+                                                <p class="content">@question.Answer</p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                        <div class="d-flex bg-white  ex1">
+                            <div class="container-fluid mt-5 mb-5 bg-white">
+                                <div class="row d-flex bg-white">
+                                    <div class="col-md-12">
+                                        <div class="comment-section bg-white">
+                                            <div class="card mt-xxl-1 bd-1 ">
+                                                <div class="form">
+                                                    <i class="fas fa-share"></i>
+                                                    <textarea class="form-control" placeholder="Answer Questions..." id="answerTextArea"></textarea>
+                                                    <div class="mt-2 d-flex justify-content-end">
+                                                        <button class="btn btn-primary btn-sm ms-1" onclick="OnSubmitAnswer(@question.Id)">Answer</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
