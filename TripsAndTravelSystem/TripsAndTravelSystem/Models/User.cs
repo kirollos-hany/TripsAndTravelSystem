@@ -24,7 +24,7 @@ namespace TripsAndTravelSystem.Models
             this.AgencyQuestions = new HashSet<TravelerQuestion>();
             this.TravelerQuestions = new HashSet<TravelerQuestion>();
         }
-        public enum UserRoles { Admin, Agency, Traveler}
+    public enum UserRoles { Admin, Agency, Traveler}
         public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
