@@ -10,6 +10,7 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="row">
+                            <span>@acceptedPost.Status</span>
                             <div class="row justify-content-center">
                                 <div class="col-4">
                                     <div class="card">
@@ -17,9 +18,7 @@
                                             <div class="d-flex flex-column align-items-center text-center" id="xy">
                                                 <img src="/image/serveimage/?id=@acceptedPost.User.UserId" alt="Admin" class="rounded-circle" width="150" id="photo">
                                                 <div class="mt-3">
-                                                    @{ 
-                                                        var agencyName = acceptedPost.User.FirstName + " " + acceptedPost.User.LastName;
-                                                    }
+                                                    @{ var agencyName = acceptedPost.User.FirstName + " " + acceptedPost.User.LastName; }
                                                     <h4>@agencyName</h4>
                                                 </div>
                                             </div>

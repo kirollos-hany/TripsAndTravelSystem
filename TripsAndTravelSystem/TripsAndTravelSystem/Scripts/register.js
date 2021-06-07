@@ -21,17 +21,17 @@ $('#registerBtn').click(() => {
     const UserRole = document.querySelector('input[name="role"]:checked');
     const ProfilePhoto = document.querySelector('input[name="profile_photo"]');
     const errorMsg = document.querySelector('#registererror');
-    if(!(Password.value === ConfirmPassword.value)){
+    if (!(Password.value === ConfirmPassword.value)) {
         errorMsg.innerHTML = 'Passwords do not match';
         return;
     }
     const extension = ProfilePhoto.files[0].name.split('.').pop();
     const fileReader = new FileReader();
-    fileReader.addEventListener('load',async()=>{
+    fileReader.addEventListener('load', async () => {
         const data = createRegisterObject(FirstName.value, LastName.value, Email.value, PhoneNumber.value, Password.value, UserRole.value, fileReader.result.split(',')[1], extension);
         await PostRegisterData(data, errorMsg);
     });
-    if(ProfilePhoto.value){
+    if (ProfilePhoto.value) {
         fileReader.readAsDataURL(ProfilePhoto.files[0]);
     }
 
@@ -41,10 +41,10 @@ $('#registerBtn').click(() => {
 
 });
 
-function createRegisterObject(firstName, lastName, email, phoneNumber, password, userRole, profilePhoto, photoExtension){
+function createRegisterObject(firstName, lastName, email, phoneNumber, password, userRole, profilePhoto, photoExtension) {
     return {
         FirstName: firstName,
-        LastName : lastName,
+        LastName: lastName,
         Email: email,
         PhoneNumber: phoneNumber,
         Password: password,
@@ -54,12 +54,12 @@ function createRegisterObject(firstName, lastName, email, phoneNumber, password,
     };
 }
 
-async function PostRegisterData(data, error){
+async function PostRegisterData(data, error) {
     const url = "http://localhost:59738/user/register";
     fetch(url, {
         method: "POST",
         headers: {
-            "content-type" : "application/json; charset=UTF-8"
+            "content-type": "application/json; charset=UTF-8"
         },
         body: JSON.stringify(data)
     }).then(response => response.json()).then((responseData) => {
@@ -72,9 +72,25 @@ async function PostRegisterData(data, error){
         }
     }).catch(error => console.log(error));
 }
-
 async function loginUser(loginData, error) {
-    await login(loginData, error);
+    const url = "http://localhost:59738/user/login";
+    fetch(url, {
+        method: "POST",
+        headers: {
+            "content-type": "application/json; charset=UTF-8"
+        },
+        body: JSON.stringify(loginData)
+    }).then(response => response.json()).then((data) => {
+        if (data.UserId !== 0) {
+            error.innerHTML = data.ErrorMessage;
+            localStorage.setItem("userId", data.UserId);
+            localStorage.setItem("redirectTo", data.RedirectUrl);
+            localStorage.setItem("email", loginData.Email);
+            localStorage.setItem("password", loginData.Password);
+            localStorage.setItem("isLogged", false);
+            window.location.href = data.RedirectUrl;
+        } else if (data.UserId === 0) {
+            error.innerHTML = data.ErrorMessage;
+        }
+    }).catch(err => console.log(err));
 }
-
-

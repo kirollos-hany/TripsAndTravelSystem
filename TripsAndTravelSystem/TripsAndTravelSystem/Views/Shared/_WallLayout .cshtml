@@ -255,8 +255,8 @@
             </li>
             <li class="nav-item p-3">
                 <p style="font-size:30px; color:black;">
-                    @Html.ActionLink("Profile", "TravelerProfile",null, htmlAttributes: new { @id="travelerProfileBtn"})
-                </p> 
+                    @Html.ActionLink("Profile", "TravelerProfile", null, htmlAttributes: new { @id = "travelerProfileBtn" })
+                </p>
             </li>
         </ul>
     </div>
@@ -310,7 +310,6 @@
     <script src="~/Scripts/Bootstrap_js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
     <script src="~/Scripts/jquery.validate.js"></script>
-    <script src="~/Scripts/register.js"></script>
     <script src="~/Scripts/signout.js"></script>
     <script src="~/Scripts/login.js"></script>
     <script>
@@ -348,9 +347,9 @@
                 Email: localStorage.getItem("email"),
                 Password: localStorage.getItem("password"),
             }
-            if (localStorage.getItem("redirectTo") !== window.location.href && localStorage.getItem("isLogged") === null) {
+            if (localStorage.getItem("redirectTo") !== window.location.href && localStorage.getItem("isLogged") === false) {
                 login(loginData, errorMsg);
-            } else if (localStorage.getItem("isLogged") === null) {
+            } else if (localStorage.getItem("isLogged") === false) {
                 loginNoRedirect(loginData, errorMsg);
             }
             $("#favoriteBtn").show();
@@ -367,6 +366,7 @@
             });
         }
     </script>
+    <script src="~/Scripts/register.js"></script>
     <script src="~/Scripts/edituser.js"></script>
     <script src="~/Scripts/questions.js"></script>
 </body>

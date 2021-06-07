@@ -1,6 +1,6 @@
 ﻿async function signout() {
     await SignOut();
-    localStorage.removeItem("isLogged");
+    localStorage.setItem("isLogged", false);
     localStorage.setItem("userId", 0);
     localStorage.setItem("redirectTo", "http://localhost:59738/");
     if (window.location.href === "http://localhost:59738/") {

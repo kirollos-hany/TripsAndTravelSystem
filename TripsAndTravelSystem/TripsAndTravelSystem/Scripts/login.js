@@ -29,7 +29,7 @@ async function login(loginData, error) {
             localStorage.setItem("email", loginData.Email);
             localStorage.setItem("password", loginData.Password);
             localStorage.setItem("isLogged", true);
-            window.location.href = data.RedirectUrl;
+            window.location = data.RedirectUrl;
         } else if (data.UserId === 0) {
             error.innerHTML = data.ErrorMessage;
         }
